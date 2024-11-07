@@ -1,9 +1,9 @@
 import React from 'react'
-
+import Navbar from './components/Navbar'
 const page = () => {
   return (
     <div>
-      Initial Folder
+      <Navbar/>
     </div>
   )
 }
