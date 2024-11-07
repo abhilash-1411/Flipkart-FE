@@ -2,11 +2,8 @@ import type { Metadata } from "next";
 import localFont from "next/font/local";
 import "./globals.css";
 import BannerComponent from "./BannerComponent/page";
-<<<<<<< Updated upstream
-import CardComponent from "./CardComponent/page"
-=======
 // import CardComponent from "./CardComponent/page"
->>>>>>> Stashed changes
+// import CardComponent from "./CardComponent/page"
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",
   variable: "--font-geist-sans",
@@ -35,11 +32,8 @@ export default function RootLayout({
       >
         {children}
         <BannerComponent/>
-<<<<<<< Updated upstream
-        <CardComponent/>
-=======
         {/* <CardComponent/> */}
->>>>>>> Stashed changes
+        {/* <CardComponent/> */}
       </body>
     </html>
   );
