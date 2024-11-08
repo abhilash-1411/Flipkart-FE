@@ -65,6 +65,33 @@ const Footer: React.FC = () => {
               </li>
             </ul>
           </div>
+
+          {/* Help Section */}
+          <div>
+            <h3 className="text-xl font-semibold mb-4">HELP</h3>
+            <ul className="space-y-2">
+              <li>
+                <Link href="/pages/payments" className="text-gray-400 hover:text-white">
+                  Payments
+                </Link>
+              </li>
+              <li>
+                <Link href="/pages/shipping" className="text-gray-400 hover:text-white">
+                  Shipping
+                </Link>
+              </li>
+              <li>
+                <Link href="/helpcentre?catalog=55c9c6edb000002e002c1701&view=CATALOG" className="text-gray-400 hover:text-white">
+                  Cancellation & Returns
+                </Link>
+              </li>
+              <li>
+                <Link href="/helpcentre?catalog=55c9c8e2b0000023002c1702&view=CATALOG" className="text-gray-400 hover:text-white">
+                  FAQ
+                </Link>
+              </li>
+            </ul>
+          </div>
         </div>
       </div>
     </footer>
