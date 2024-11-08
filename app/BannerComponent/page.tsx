@@ -115,7 +115,7 @@ export default function CategorySection() {
 
               {hoveredCategory === category.name &&
                 category.dropdownOptions && (
-                  <div className="absolute top-24 left-0 w-48 mt-2 p-1 bg-white border border-gray-200 shadow-lg rounded-lg transition-all transform duration-300 ease-in-out">
+                  <div className="absolute top-[5rem] z-10  left-0 w-48 mt-2 p-1 bg-white border border-gray-200 shadow-lg rounded-lg transition-all transform duration-300 ease-in-out">
                     <ul className="flex flex-col space-y-2">
                       {category.dropdownOptions.map((option, idx) => (
                         <li
