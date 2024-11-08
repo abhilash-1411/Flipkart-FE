@@ -1,65 +1,126 @@
-"use client";
+'use client';
+import React, { useState } from 'react';
+interface CardData {
+  image: string;
+  title: string;
+  price: string;
+}
 
-import { useState, useEffect } from "react";
-import Image from "next/image";
+const Cards: React.FC = () => {
+  
+  const [currentSlide, setCurrentSlide] = useState(0);
 
-
-const fetchMobileCategories = async () => {
-
-  return [
-    { name: "Realme P15", imageUrl: "/images/realmeP15.jpg", price: "From Rs.13,999" },
-    { name: "Vivo T2 Pro 5G", imageUrl: "/images/vivoT2Pro5g.jpg", price: "From Rs.20,999" },
-    { name: "Poco M6 Pro 5G", imageUrl: "/images/pocom6Pro5g.jpg", price: "From Rs.9,249" },
-    { name: "Moto Edge 50 Fusion", imageUrl: "/images/motoEdge50Fusion.jpg", price: "From Rs.19,999" },
+  
+  const cards: CardData[] = [
+    {
+      image: 'https://rukminim2.flixcart.com/fk-p-flap/1570/260/image/4d1606268e015845.jpg?q=80',
+      title: 'Product 1',
+      price: '₹999',
+    },
+    {
+      image: 'https://rukminim1.flixcart.com/fk-p-flap/1600/270/image/8acfb721c7bef89a.jpg?q=20',
+      title: 'Product 2',
+      price: '₹1499',
+    },
+    {
+      image: 'https://rukminim1.flixcart.com/fk-p-flap/1600/270/image/f991d1be51d2f0c2.jpg?q=20',
+      title: 'Product 3',
+      price: '₹1999',
+    },
+    {
+      image: 'https://rukminim1.flixcart.com/fk-p-flap/1600/270/image/2e6d5e4191298924.jpg?q=20',
+      title: 'Product 4',
+      price: '₹2499',
+    },
+    {
+      image: 'https://rukminim1.flixcart.com/fk-p-flap/1600/270/image/5d51dbf60f2f8d4d.jpg?q=20',
+      title: 'Product 5',
+      price: '₹2999',
+    },
+    {
+      image: 'https://rukminim1.flixcart.com/fk-p-flap/1600/270/image/2e6d5e4191298924.jpg?q=20',
+      title: 'Product 6',
+      price: '₹3499',
+    },
+  
   ];
-};
 
-export default function CardComponent() {
-  const [mobileCategories, setMobileCategories] = useState<any[]>([]);
+  const ITEMS_PER_SLIDE = 4; 
 
-  useEffect(() => {
-   
-    const getMobileCategories = async () => {
-      const categories = await fetchMobileCategories();
-      setMobileCategories(categories);
-    };
+  
+  const nextSlide = () => {
+    setCurrentSlide((prevSlide) => Math.min(prevSlide + 1, Math.floor(cards.length / ITEMS_PER_SLIDE)));
+  };
 
-    getMobileCategories();
-  }, []);
+  
+  const prevSlide = () => {
+    setCurrentSlide((prevSlide) => Math.max(prevSlide - 1, 0));
+  };
+
+  const handleDotClick = (index: number) => {
+    setCurrentSlide(index);
+  };
 
   return (
-    <div className="bg-white mt-5 p-2 border-t border-gray-200 shadow-lg mr-[300px]">
-      <h1 className="text-2xl font-bold text-gray-800 mb-6 ">Best Deals on Smartphones</h1>
-      <div className="mx-auto w-full sm:max-w-3xl md:max-w-4xl lg:max-w-5xl xl:max-w-6xl">
-       
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 pb-2">
-          {mobileCategories.map((category, index) => (
-            <div
-              key={index}
-              className="flex flex-col items-center justify-between border-2 border-gray-300 rounded-lg p-7 space-y-4 h-[290px] shadow-md hover:shadow-lg transition-shadow" 
-            >
-             
-              <div className="flex-shrink-0 w-[140px] h-[140px] flex items-center justify-center">
-                <Image
-                  src={category.imageUrl}
-                  alt={category.name}
-                  width={140} 
-                  height={140} 
-                  objectFit="contain"
-                  className="rounded-md"
+    <div className="relative m-4 w-full mx-auto">
+    
+      <div className="relative w-full overflow-hidden">
+        <div className="h-12 p-4 text-xl font-semibold">Best Deals on Smartphones</div>
+        <div
+          className="flex transition-transform duration-500"
+          style={{
+            transform: `translateX(-${currentSlide * (100 / Math.ceil(cards.length / ITEMS_PER_SLIDE))}%)`,
+          }}
+        >
+         
+          {cards.map((card, index) => (
+            <div key={index} className="w-[20rem] flex-shrink-0 px-4 p-4">
+              
+              <div className="bg-white rounded-lg shadow-lg overflow-hidden">
+                <img
+                  src={card.image}
+                  alt={`Product ${index + 1}`}
+                  className="w-full h-56 object-cover"
+                  style={{ aspectRatio: '211/35' }} 
                 />
-              </div>
-
-              <div className="flex flex-col items-center justify-center text-center space-y-1"> 
-                <span className="text-md font-medium text-gray-800">{category.name}</span>
-                {category.price && (
-                  <span className="text-sm  text-black font-bold">{category.price}</span>
-                )}
+                <div className="p-4">
+                  <h3 className="text-lg font-semibold">{card.title}</h3>
+                  <p className="text-xl font-bold text-gray-800">{card.price}</p>
+                </div>
               </div>
             </div>
           ))}
         </div>
       </div>
+
+      
+      <div className="absolute bottom-5 left-1/2 transform -translate-x-1/2 flex space-x-3">
+        {Array.from({ length: Math.ceil(cards.length / ITEMS_PER_SLIDE) }).map((_, index) => (
+          <button
+            key={index}
+            onClick={() => handleDotClick(index)}
+            className={`w-3 h-3 rounded-full bg-white ${currentSlide === index ? 'bg-blue-500' : 'bg-opacity-50'}`}
+          ></button>
+        ))}
+      </div>
+
+     
+      <button
+        onClick={prevSlide}
+        className="absolute top-1/2 left-0 transform -translate-y-1/2 bg-white p-5 rounded-full shadow-lg"
+        disabled={currentSlide === 0} 
+      >
+        &lt;
+      </button>
+      <button
+        onClick={nextSlide}
+        className="absolute top-1/2 right-0 transform -translate-y-1/2 bg-white p-5 rounded-full shadow-lg"
+        disabled={currentSlide === Math.floor(cards.length / ITEMS_PER_SLIDE)} 
+      >
+        &gt;
+      </button>
     </div>
   );
-}
+};
+
+export default Cards;
