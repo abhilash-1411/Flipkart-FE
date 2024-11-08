@@ -1,17 +1,20 @@
 'use client';
-
+import Image from "next/image";
 import Navbar from "../components/Navbar";
 import React, { useState } from "react";
-import Image from "next/image";
 
-const Login: React.FC = () => {
+const Signup: React.FC = () => {
   const [formData, setFormData] = useState({
-    email: "",  // Changed from 'username' to 'email'
+    firstName: "",
+    lastName: "",
+    email: "",
     password: "",
   });
 
   const [errors, setErrors] = useState({
-    email: "",  // Changed from 'username' to 'email'
+    firstName: "",
+    lastName: "",
+    email: "",
     password: "",
   });
 
@@ -27,12 +30,23 @@ const Login: React.FC = () => {
     const newErrors: any = {};
     let isValid = true;
 
+    // Validate First Name
+    if (!formData.firstName) {
+      newErrors.firstName = "First name is required.";
+      isValid = false;
+    }
+
+    // Validate Last Name
+    if (!formData.lastName) {
+      newErrors.lastName = "Last name is required.";
+      isValid = false;
+    }
+
     // Validate Email
     if (!formData.email) {
       newErrors.email = "Email is required.";
       isValid = false;
     } else if (!/\S+@\S+\.\S+/.test(formData.email)) {
-      // Validate email format
       newErrors.email = "Please enter a valid email.";
       isValid = false;
     }
@@ -50,21 +64,28 @@ const Login: React.FC = () => {
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     if (validateForm()) {
-      console.log("Login data submitted", formData);
-      // Handle login logic here (API call, validation, etc.)
+      console.log("Form Submitted", formData);
+      setFormData({
+        firstName: "",
+        lastName: "",
+        email: "",
+        password: "",
+      });
     }
   };
 
   return (
-    <>
+    <div>
       <Navbar />
       <div className="flex justify-center items-center min-h-screen bg-gray-100">
-        <div className="flex w-full max-w-5xl bg-white shadow-lg rounded-lg h-[29rem]">
+        <div className="flex w-full max-w-5xl bg-white shadow-lg rounded-lg">
           {/* Left Section: Message */}
-          <div className="flex flex-col justify-between p-8 bg-colors-blue text-white">
-            <h2 className="text-2xl font-semibold mb-4">Welcome Back!</h2>
+          <div className="flex flex-col justify-around p-8 bg-blue-500 text-white">
+            <h2 className="text-2xl font-semibold mb-4">
+              Looks like you're new here!
+            </h2>
             <p className="mb-24 text-gray-200">
-              Log in to your account to continue.
+              Sign up with your email number to get started.
             </p>
             <Image src="/Screenshot-2024-11-06 154450.png" alt="" width={300} height={300} />
           </div>
@@ -72,12 +93,44 @@ const Login: React.FC = () => {
           {/* Right Section: Form Fields */}
           <div className="flex-1 p-8">
             <form onSubmit={handleSubmit}>
+              {/* First Name */}
+              <div className="mb-4">
+                <label className="block text-sm font-medium text-gray-600">First Name</label>
+                <input
+                  type="text"
+                  name="firstName"
+                  value={formData.firstName}
+                  onChange={handleInputChange}
+                  className="w-full px-4 py-2 mt-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  placeholder="Enter your first name"
+                />
+                {errors.firstName && (
+                  <p className="text-red-500 text-xs mt-1">{errors.firstName}</p>
+                )}
+              </div>
+
+              {/* Last Name */}
+              <div className="mb-4">
+                <label className="block text-sm font-medium text-gray-600">Last Name</label>
+                <input
+                  type="text"
+                  name="lastName"
+                  value={formData.lastName}
+                  onChange={handleInputChange}
+                  className="w-full px-4 py-2 mt-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  placeholder="Enter your last name"
+                />
+                {errors.lastName && (
+                  <p className="text-red-500 text-xs mt-1">{errors.lastName}</p>
+                )}
+              </div>
+
               {/* Email */}
               <div className="mb-4">
                 <label className="block text-sm font-medium text-gray-600">Email</label>
                 <input
-                  type="email"  // Ensuring it's an email input field
-                  name="email"  // Changed from 'username' to 'email'
+                  type="email"
+                  name="email"
                   value={formData.email}
                   onChange={handleInputChange}
                   className="w-full px-4 py-2 mt-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
@@ -110,23 +163,23 @@ const Login: React.FC = () => {
                   type="submit"
                   className="w-full py-2 px-4 bg-orange-600 text-white rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500"
                 >
-                  Log In
+                  Continue
                 </button>
               </div>
             </form>
 
-            {/* Sign Up Link */}
+            {/* Login Link */}
             <div className="mt-4 text-center">
-              <a href="/signup" className="text-blue-600 hover:underline">
-                New User? Sign up
+              <a href="/login" className="text-blue-600 hover:underline">
+                Existing User? Log in
               </a>
             </div>
           </div>
         </div>
       </div>
-    
-    </>
+      {/* <Footer /> */}
+    </div>
   );
 };
 
-export default Login;
+export default Signup;
