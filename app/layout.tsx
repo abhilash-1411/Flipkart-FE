@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import localFont from "next/font/local";
 import "./globals.css";
 import BannerComponent from "./BannerComponent/page";
-import CardComponent from "./CardComponent/page"
+ import CardComponent from "./CardComponent/page";
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",
   variable: "--font-geist-sans",
@@ -31,7 +31,7 @@ export default function RootLayout({
       >
         {children}
         <BannerComponent/>
-        <CardComponent/>
+       <CardComponent/> 
       </body>
     </html>
   );
