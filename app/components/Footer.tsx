@@ -92,6 +92,48 @@ const Footer: React.FC = () => {
               </li>
             </ul>
           </div>
+
+          {/* Consumer Policy Section */}
+          <div>
+            <h3 className="text-xl font-semibold mb-4">CONSUMER POLICY</h3>
+            <ul className="space-y-2">
+              <li>
+                <Link href="/pages/returnpolicy?otracker=footer_navlinks" className="text-gray-400 hover:text-white">
+                  Cancellation & Returns
+                </Link>
+              </li>
+              <li>
+                <Link href="/pages/terms?otracker=footer_navlinks" className="text-gray-400 hover:text-white">
+                  Terms Of Use
+                </Link>
+              </li>
+              <li>
+                <Link href="https://www.flipkart.com/pages/privacypolicy?otracker=footer_navlinks" className="text-gray-400 hover:text-white" target="_blank" rel="noopener noreferrer">
+                  Privacy Policy
+                </Link>
+              </li>
+              <li>
+                <Link href="/pages/terms?otracker=footer_navlinks" className="text-gray-400 hover:text-white">
+                  Security
+                </Link>
+              </li>
+              <li>
+                <Link href="https://www.flipkart.com/pages/secure-transaction?otracker=footer_navlinks" className="text-gray-400 hover:text-white" target="_blank" rel="noopener noreferrer">
+                  Secure Shopping
+                </Link>
+              </li>
+              <li>
+                <Link href="https://www.flipkart.com/pages/shipping?otracker=footer_navlinks" className="text-gray-400 hover:text-white" target="_blank" rel="noopener noreferrer">
+                  Shipping
+                </Link>
+              </li>
+            </ul>
+          </div>
+        </div>
+
+        {/* Bottom Section */}
+        <div className="mt-8 text-center">
+          <p className="text-gray-500 text-sm">&copy; 2024 Flipkart.com</p>
         </div>
       </div>
     </footer>
