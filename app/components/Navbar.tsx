@@ -71,14 +71,14 @@ const Navbar: React.FC = () => {
                   <title>Search Icon</title>
                   <path
                     d="M10.5 18C14.6421 18 18 14.6421 18 10.5C18 6.35786 14.6421 3 10.5 3C6.35786 3 3 6.35786 3 10.5C3 14.6421 6.35786 18 10.5 18Z"
-                    stroke="currentColor" // Change to currentColor
+                    stroke="currentColor" 
                     strokeWidth="1.4"
                     strokeLinecap="round"
                     strokeLinejoin="round"
                   ></path>
                   <path
                     d="M16 16L21 21"
-                    stroke="currentColor" // Change to currentColor
+                    stroke="currentColor"
                     strokeWidth="1.4"
                     strokeLinecap="round"
                     strokeLinejoin="round"
@@ -117,7 +117,7 @@ const Navbar: React.FC = () => {
                 >
                   <path
                     d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-3.31 0-10 1.67-10 5v2h20v-2c0-3.33-6.69-5-10-5z"
-                    fill="currentColor" // Use currentColor to inherit text color
+                    fill="currentColor" 
                   />
                 </svg>
                 <span className="text-gray-600 group-hover:text-white">Login</span>
@@ -162,7 +162,7 @@ const Navbar: React.FC = () => {
               >
                 <path
                   d="M7 4h14l-1.5 9H8.5L7 4zM5 4H3v2h2l1 2h14v2H7l-1-2H5V4zm0 12h14v2H5v-2z"
-                  fill="currentColor" // Use currentColor to inherit text color
+                  fill="currentColor" 
                 />
               </svg>
               <span className="text-gray-600 group-hover:text-white">Cart</span>
