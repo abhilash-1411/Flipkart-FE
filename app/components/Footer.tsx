@@ -43,6 +43,28 @@ const Footer: React.FC = () => {
               </li>
             </ul>
           </div>
+
+          {/* Group Companies Section */}
+          <div>
+            <h3 className="text-xl font-semibold mb-4">GROUP COMPANIES</h3>
+            <ul className="space-y-2">
+              <li>
+                <Link href="https://www.myntra.com/" className="text-gray-400 hover:text-white" target="_blank" rel="noopener noreferrer">
+                  Myntra
+                </Link>
+              </li>
+              <li>
+                <Link href="https://www.cleartrip.com/" className="text-gray-400 hover:text-white" target="_blank" rel="noopener noreferrer">
+                  Cleartrip
+                </Link>
+              </li>
+              <li>
+                <Link href="https://www.shopsy.in/" className="text-gray-400 hover:text-white" target="_blank" rel="noopener noreferrer">
+                  Shopsy
+                </Link>
+              </li>
+            </ul>
+          </div>
         </div>
       </div>
     </footer>
