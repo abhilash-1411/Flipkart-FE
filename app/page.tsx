@@ -2,14 +2,18 @@ import React from 'react'
 import Navbar from './components/Navbar'
 import BannerComponent from "./BannerComponent/page";
 import Footer from './components/Footer'
+import BannerComponent from "./BannerComponent/page";
+ import CardComponent from "./CardComponent/page";
 import Carousel from './components/Carousel'
 const page = () => {
   return (
     <div>
       <Navbar/>
+      <main className=''>
       <BannerComponent/>
-      <main className='h-screen'>
-        <Carousel/>
+      <Carousel/>
+      <CardComponent/> 
+        
       </main>
       <Footer/>
     </div>
