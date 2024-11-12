@@ -1,5 +1,6 @@
 import React from 'react'
 import Navbar from './components/Navbar'
+import BannerComponent from "./BannerComponent/page";
 import Footer from './components/Footer'
 import BannerComponent from "./BannerComponent/page";
  import CardComponent from "./CardComponent/page";
