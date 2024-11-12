@@ -1,5 +1,7 @@
 "use client";
 import React, { useState, useEffect } from "react";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faChevronRight } from "@fortawesome/free-solid-svg-icons";
 interface CardData {
   image: string;
   title: string;
@@ -112,6 +114,9 @@ const Cards: React.FC = () => {
                   <p className="text-xl font-bold text-gray-800">
                     {card.price}
                   </p>
+                </div>
+                <div className="ml-auto">
+                  <FontAwesomeIcon icon={faChevronRight} className="text-md" />
                 </div>
               </div>
             ))}
