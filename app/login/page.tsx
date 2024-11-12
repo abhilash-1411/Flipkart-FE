@@ -1,6 +1,5 @@
 'use client';
 
-import Navbar from "../components/Navbar";
 import React, { useState } from "react";
 import Image from "next/image";
 
@@ -57,7 +56,6 @@ const Login: React.FC = () => {
 
   return (
     <>
-      <Navbar />
       <div className="flex justify-center items-center min-h-screen bg-gray-100">
         <div className="flex w-full max-w-5xl bg-white shadow-lg rounded-lg h-[29rem]">
           {/* Left Section: Message */}

@@ -7,14 +7,11 @@ import Carousel from './components/Carousel'
 const page = () => {
   return (
     <div>
-      <Navbar/>
       <main className=''>
       <BannerNavigation/>
       <Carousel/>
-      <CardComponent/> 
-        
+      <CardComponent/>  
       </main>
-      <Footer/>
     </div>
   )
 }
