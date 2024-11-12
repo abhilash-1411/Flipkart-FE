@@ -15,6 +15,9 @@ const Login: React.FC = () => {
     password: "",
   });
 
+  const [isLoading, setIsLoading] = useState(false);
+  const [loginError, setLoginError] = useState<string>("");
+
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
     setFormData((prev) => ({
@@ -47,11 +50,43 @@ const Login: React.FC = () => {
     return isValid;
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+
     if (validateForm()) {
-      console.log("Login data submitted", formData);
-      // Handle login logic here (API call, validation, etc.)
+      setIsLoading(true);  // Start loading
+      setLoginError("");   // Reset previous errors
+
+      try {
+        // Make API request
+        const response = await fetch("https://9d8p7tn1-3000.inc1.devtunnels.ms/auth/login", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            email: formData.email,
+            password: formData.password,
+          }),
+        });
+
+        const data = await response.json();
+
+        if (response.ok) {
+          // Successful login
+          console.log("Login successful:", data);
+          // Redirect or handle successful login here (e.g., save token, redirect user, etc.)
+        } else {
+          // Handle errors from API response
+          setLoginError(data.message || "Login failed. Please try again.");
+        }
+      } catch (error) {
+        // Handle network errors or unexpected errors
+        setLoginError("An error occurred. Please try again later.");
+        console.error("Login API error:", error);
+      } finally {
+        setIsLoading(false);  // Stop loading
+      }
     }
   };
 
@@ -109,11 +144,19 @@ const Login: React.FC = () => {
                 <button
                   type="submit"
                   className="w-full py-2 px-4 bg-orange-600 text-white rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  disabled={isLoading}  // Disable button while loading
                 >
-                  Log In
+                  {isLoading ? "Logging in..." : "Log In"}
                 </button>
               </div>
             </form>
+
+            {/* Display login error message */}
+            {loginError && (
+              <div className="mt-4 text-red-500 text-center">
+                <p>{loginError}</p>
+              </div>
+            )}
 
             {/* Sign Up Link */}
             <div className="mt-4 text-center">
@@ -124,7 +167,6 @@ const Login: React.FC = () => {
           </div>
         </div>
       </div>
-    
     </>
   );
 };
