@@ -1,20 +1,15 @@
 import React from 'react'
-import Navbar from './components/Navbar'
 import BannerNavigation from "./BannerNavigation/page";
-import Footer from './components/Footer'
-import CardComponent from "./CardComponent/page";
 import Carousel from './components/Carousel'
+import Cards from './components/Card';
 const page = () => {
   return (
     <div>
-      <Navbar/>
       <main className=''>
       <BannerNavigation/>
       <Carousel/>
-      <CardComponent/> 
-        
+      <Cards/> 
       </main>
-      <Footer/>
     </div>
   )
 }

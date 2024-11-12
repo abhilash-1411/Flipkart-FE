@@ -1,22 +1,26 @@
 'use client';
 import Image from "next/image";
-import Navbar from "../components/Navbar";
 import React, { useState } from "react";
+import { useRouter } from 'next/navigation'; // Import the useRouter hook to redirect
+import axios from 'axios'; // Import axios
 
 const Signup: React.FC = () => {
   const [formData, setFormData] = useState({
-    firstName: "",
-    lastName: "",
+    Name: "",
     email: "",
     password: "",
   });
 
   const [errors, setErrors] = useState({
-    firstName: "",
-    lastName: "",
+    Name: "",
     email: "",
     password: "",
   });
+
+  const [isSubmitting, setIsSubmitting] = useState(false); // To handle the submitting state
+  const [errorMessage, setErrorMessage] = useState(""); // For API error messages
+
+  const router = useRouter(); // For redirecting to login page after successful registration
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
@@ -30,15 +34,9 @@ const Signup: React.FC = () => {
     const newErrors: any = {};
     let isValid = true;
 
-    // Validate First Name
-    if (!formData.firstName) {
-      newErrors.firstName = "First name is required.";
-      isValid = false;
-    }
-
-    // Validate Last Name
-    if (!formData.lastName) {
-      newErrors.lastName = "Last name is required.";
+    // Validate Name
+    if (!formData.Name) {
+      newErrors.Name = "Name is required.";
       isValid = false;
     }
 
@@ -61,22 +59,48 @@ const Signup: React.FC = () => {
     return isValid;
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    
     if (validateForm()) {
-      console.log("Form Submitted", formData);
-      setFormData({
-        firstName: "",
-        lastName: "",
-        email: "",
-        password: "",
-      });
+      setIsSubmitting(true);
+      setErrorMessage(""); // Reset any previous error messages
+
+      try {
+        // Make the API request to register the user using Axios
+        const response = await axios.post("https://9d8p7tn1-8000.inc1.devtunnels.ms/auth/register", {
+          Name: formData.Name,
+          email: formData.email,
+          password: formData.password,
+        }, {
+          headers: {
+            "Content-Type": "application/json",
+          },
+        });
+
+        // If registration is successful, redirect to login page
+        router.push("/login");
+
+      } catch (error: any) {
+        // Handle any errors that occurred during the request
+        if (error.response) {
+          // Request made and server responded with a status other than 2xx
+          setErrorMessage(error.response.data.message || "Something went wrong.");
+        } else if (error.request) {
+          // The request was made but no response was received
+          setErrorMessage("Network error. Please try again.");
+        } else {
+          // Something happened in setting up the request
+          setErrorMessage("An unexpected error occurred.");
+        }
+      } finally {
+        setIsSubmitting(false); // Stop the loading state
+      }
     }
   };
 
   return (
     <div>
-      <Navbar />
       <div className="flex justify-center items-center min-h-screen bg-gray-100">
         <div className="flex w-full max-w-5xl bg-white shadow-lg rounded-lg">
           {/* Left Section: Message */}
@@ -93,35 +117,19 @@ const Signup: React.FC = () => {
           {/* Right Section: Form Fields */}
           <div className="flex-1 p-8">
             <form onSubmit={handleSubmit}>
-              {/* First Name */}
+              {/*  Name */}
               <div className="mb-4">
-                <label className="block text-sm font-medium text-gray-600">First Name</label>
+                <label className="block text-sm font-medium text-gray-600">Name</label>
                 <input
                   type="text"
-                  name="firstName"
-                  value={formData.firstName}
+                  name="Name"
+                  value={formData.Name}
                   onChange={handleInputChange}
                   className="w-full px-4 py-2 mt-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-                  placeholder="Enter your first name"
+                  placeholder="Enter your name"
                 />
-                {errors.firstName && (
-                  <p className="text-red-500 text-xs mt-1">{errors.firstName}</p>
-                )}
-              </div>
-
-              {/* Last Name */}
-              <div className="mb-4">
-                <label className="block text-sm font-medium text-gray-600">Last Name</label>
-                <input
-                  type="text"
-                  name="lastName"
-                  value={formData.lastName}
-                  onChange={handleInputChange}
-                  className="w-full px-4 py-2 mt-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-                  placeholder="Enter your last name"
-                />
-                {errors.lastName && (
-                  <p className="text-red-500 text-xs mt-1">{errors.lastName}</p>
+                {errors.Name && (
+                  <p className="text-red-500 text-xs mt-1">{errors.Name}</p>
                 )}
               </div>
 
@@ -162,10 +170,18 @@ const Signup: React.FC = () => {
                 <button
                   type="submit"
                   className="w-full py-2 px-4 bg-orange-600 text-white rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  disabled={isSubmitting}
                 >
-                  Continue
+                  {isSubmitting ? "Registering..." : "Continue"}
                 </button>
               </div>
+
+              {/* Display error message */}
+              {errorMessage && (
+                <div className="mt-4 text-red-500 text-center">
+                  <p>{errorMessage}</p>
+                </div>
+              )}
             </form>
 
             {/* Login Link */}
@@ -177,7 +193,6 @@ const Signup: React.FC = () => {
           </div>
         </div>
       </div>
-      {/* <Footer /> */}
     </div>
   );
 };
