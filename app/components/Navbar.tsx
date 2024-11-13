@@ -1,40 +1,41 @@
 'use client';
-import React, { useState } from "react";
+import React, { useState } from 'react';
 import { useAuth } from '../context/AuthContext';
-import Router from "next/router";
-import SideBar from "./SideBar";
+import Router from 'next/router';
+import SideBar from './SideBar';
+ 
 const Navbar: React.FC = () => {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const [isSidebarOpen, setIsSidebarOpen] = useState(false); // New state for sidebar toggle
   const { isAuthenticated, logout } = useAuth();
-
+ 
   const handleMouseEnter = () => setIsDropdownOpen(true);
   const handleMouseLeave = () => setIsDropdownOpen(false);
-
+ 
   const handleLogout = async () => {
     try {
-      const response = await fetch("https://9d8p7tn1-3000.inc1.devtunnels.ms/auth/logout", {
-        method: "POST",
+      const response = await fetch('https://9d8p7tn1-3000.inc1.devtunnels.ms/auth/logout', {
+        method: 'POST',
         headers: {
-          "Content-Type": "application/json",
+          'Content-Type': 'application/json',
         },
       });
-
+ 
       if (response.ok) {
         logout();
-        Router.push("/login");
+        Router.push('/login');
       } else {
-        console.error("Logout failed: ", response.statusText);
+        console.error('Logout failed: ', response.statusText);
       }
     } catch (error) {
-      console.error("Network error during logout: ", error);
+      console.error('Network error during logout: ', error);
     }
   };
-
+ 
   const toggleSidebar = () => {
     setIsSidebarOpen(!isSidebarOpen);
   };
-
+ 
   return (
     <div className="w-full">
       <header className="bg-white">
@@ -66,16 +67,16 @@ const Navbar: React.FC = () => {
               </picture>
             </a>
           </div>
-
+ 
           {/* Sidebar Button for Small Screens */}
           <button
             className="md:hidden absolute right-10  px-4 py-2 bg-gray-700 text-white rounded-md"
             onClick={toggleSidebar}
             aria-label="Toggle Sidebar"
           >
-            {isSidebarOpen ? "Close Sidebar" : "Open Sidebar"}
+            {isSidebarOpen ? 'Close Sidebar' : 'Open Sidebar'}
           </button>
-
+ 
           {/* Center Section (Search bar) */}
           <div className="w-1/2 md:w-[50%] hidden sm:block">
             <form
@@ -124,7 +125,7 @@ const Navbar: React.FC = () => {
               </div>
             </form>
           </div>
-
+ 
           {/* Right Section (User, Cart, Seller) */}
           <div className="md:flex items-center space-x-4 justify-end w-1/4 sm:w-[38%] hidden">
             {/* Conditional Login/Logout Button */}
@@ -169,10 +170,33 @@ const Navbar: React.FC = () => {
                     />
                   </svg>
                   <span className="text-gray-600 group-hover:text-white">Login</span>
+                <span className="flex flex-col">
+                  <div className="transition-transform transform group-hover:rotate-180 duration-300 ease-in group-hover:text-white pt-2">
+                    ^
+                  </div>
+                </span>
+                  {isDropdownOpen && (
+                    <div className="absolute top-11 right-0 w-40 bg-white border border-gray-200 rounded-md shadow-lg z-10 group-hover:bg-white-600">
+                      <div className="">
+                        <a
+                          href="/login"
+                          className="block px-4 py-2 text-sm text-gray-700  hover:bg-slate-100"
+                        >
+                          Login
+                        </a>
+                        <a
+                          href="/signup"
+                          className="block px-4 py-2 text-sm text-gray-700  hover:bg-slate-100"
+                        >
+                          Sign Up
+                        </a>
+                      </div>
+                    </div>
+                  )}
                 </button>
               )}
             </div>
-
+ 
             {/* Cart Button */}
             <button className="hover:bg-blue-600 px-3 py-2 rounded-md flex items-center gap-2 text-[19px] group">
               <svg
@@ -190,7 +214,7 @@ const Navbar: React.FC = () => {
               </svg>
               <span className="text-gray-600 group-hover:text-white">Cart</span>
             </button>
-
+ 
             {/* Become a Seller */}
             <button className="px-3 py-2 rounded-md flex items-center gap-2 hover:bg-blue-600 text-[19px] group">
               <svg
@@ -213,11 +237,11 @@ const Navbar: React.FC = () => {
           </div>
         </div>
       </header>
-
+ 
       {/* Sidebar */}
       {isSidebarOpen && <SideBar onClose={toggleSidebar} />}
     </div>
   );
 };
-
+ 
 export default Navbar;

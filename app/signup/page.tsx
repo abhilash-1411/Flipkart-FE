@@ -3,7 +3,6 @@ import Image from "next/image";
 import React, { useState } from "react";
 import { useRouter } from 'next/navigation'; // Import the useRouter hook to redirect
 import axios from 'axios'; // Import axios
-import { useRouter } from 'next/navigation'; // Import the useRouter hook to redirect
 
 const Signup: React.FC = () => {
   const [formData, setFormData] = useState({
