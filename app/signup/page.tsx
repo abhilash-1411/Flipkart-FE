@@ -103,22 +103,28 @@ const Signup: React.FC = () => {
   return (
     <div>
       <div className="flex justify-center items-center min-h-screen bg-gray-100">
-        <div className="flex w-full max-w-5xl bg-white shadow-lg rounded-lg">
+        <div className="flex flex-col sm:flex-row w-full max-w-5xl bg-white shadow-lg rounded-lg">
           {/* Left Section: Message */}
-          <div className="flex flex-col justify-around p-8 bg-blue-500 text-white">
-            <h2 className="text-2xl font-semibold mb-4">
+          <div className="flex flex-col justify-center items-center p-8 bg-blue-500 text-white sm:w-1/2 sm:rounded-l-lg sm:h-full sm:mb-0 mb-4">
+            <h2 className="text-2xl font-semibold mb-4 text-center">
               Looks like you're new here!
             </h2>
-            <p className="mb-24 text-gray-200">
-              Sign up with your email number to get started.
+            <p className="mb-8 text-gray-200 text-sm sm:text-base text-center">
+              Sign up with your email to get started.
             </p>
-            <Image src="/Screenshot-2024-11-06 154450.png" alt="" width={300} height={300} />
+            <Image 
+              src="/Screenshot-2024-11-06 154450.png" 
+              alt="Illustration"
+              width={200} 
+              height={200} 
+              className="w-40 h-40 sm:w-auto sm:h-auto"
+            />
           </div>
 
           {/* Right Section: Form Fields */}
-          <div className="flex-1 p-8">
+          <div className="flex-1 p-8 sm:w-1/2 sm:rounded-r-lg">
             <form onSubmit={handleSubmit}>
-              {/*  Name */}
+              {/* Name */}
               <div className="mb-4">
                 <label className="block text-sm font-medium text-gray-600">Name</label>
                 <input
@@ -133,8 +139,6 @@ const Signup: React.FC = () => {
                   <p className="text-red-500 text-xs mt-1">{errors.Name}</p>
                 )}
               </div>
-
-             
 
               {/* Email */}
               <div className="mb-4">
