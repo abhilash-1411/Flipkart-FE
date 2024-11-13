@@ -200,7 +200,7 @@ const CardDetails: React.FC = () => {
             className="w-full max-w-md h-80 object-cover rounded-lg shadow-lg"
           />
 
-          <div className="mt-4 w-full md:w-1/2 flex justify-between md:flex-row md:items-center">
+          <div className="mt-4 w-full md:w-1/2 flex justify-between md:flex-row md:items-center gap-1">
             {/* Add to Cart Button with SVG Image */}
             <button className="w-full md:w-40 bg-black text-white py-2 px-4 rounded-lg shadow hover:bg-blue-600 transition mb-2 md:mb-0 flex items-center justify-center space-x-2">
               <svg
@@ -221,7 +221,7 @@ const CardDetails: React.FC = () => {
             </button>
 
             {/* Buy Now Button with SVG Image */}
-            <button className="w-full md:w-40 bg-black text-white py-2 px-4 rounded-lg shadow hover:bg-blue-600 transition md:ml-4 flex items-center justify-center space-x-2">
+            <button className="w-full md:w-40 bg-black text-white py-2 px-4 rounded-lg shadow hover:bg-blue-600 transition mb-2 md:mb-0 flex items-center justify-center space-x-2">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 className="w-5 h-5"
