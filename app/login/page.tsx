@@ -57,11 +57,13 @@ const Login: React.FC = () => {
   return (
     <>
       <div className="flex justify-center items-center min-h-screen bg-gray-100">
-        <div className="flex w-full max-w-5xl bg-white shadow-lg rounded-lg h-[29rem]">
-          {/* Left Section: Message */}
-          <div className="flex flex-col justify-between p-8 bg-colors-blue text-white sm:w-1/2 rounded-t-lg sm:rounded-l-lg sm:rounded-tr-none">
-            <h2 className="text-2xl font-semibold mb-4">Welcome Back!</h2>
-            <p className="mb-8 sm:mb-24 text-gray-200">
+        <div className="flex flex-col sm:flex-row w-full max-w-5xl bg-white shadow-lg rounded-lg h-auto sm:h-[29rem]">
+          {/* Left Section: Message and Image */}
+          <div className="flex flex-col justify-center items-center p-8 bg-blue-500 text-white sm:w-1/2 sm:rounded-l-lg sm:h-full sm:mb-0 mb-4">
+            <h2 className="text-2xl font-semibold mb-4 text-center">
+              Welcome Back!
+            </h2>
+            <p className="mb-8 sm:mb-24 text-gray-200 text-center">
               Log in to your account to continue.
             </p>
             <Image
@@ -80,8 +82,8 @@ const Login: React.FC = () => {
               <div className="mb-4">
                 <label className="block text-sm font-medium text-gray-600">Email</label>
                 <input
-                  type="email"  // Ensuring it's an email input field
-                  name="email"  // Changed from 'username' to 'email'
+                  type="email"
+                  name="email"
                   value={formData.email}
                   onChange={handleInputChange}
                   className="w-full px-4 py-2 mt-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
@@ -119,6 +121,7 @@ const Login: React.FC = () => {
               </div>
             </form>
 
+            {/* Sign Up Link */}
             <div className="mt-4 text-center">
               <a href="/signup" className="text-blue-600 hover:underline">
                 New User? Sign up
