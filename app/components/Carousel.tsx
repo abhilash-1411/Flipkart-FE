@@ -48,7 +48,7 @@ const Carousel: React.FC = () => {
               <img
                 src={src}
                 alt={`Carousel slide ${index + 1}`}
-                className="w-full h-[15rem] object-contain"
+                className="w-full h-auto mt-2 mb-2 object-contain"
                 style={{ aspectRatio: '211/35' }} 
               />
             </div>

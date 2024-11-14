@@ -49,12 +49,20 @@ const SideBar: React.FC<{ onClose: () => void }> = ({ onClose }) => {
               Logout
             </button>
           ) : (
+            <>
             <a
               href="/login" // or your custom login route
               className="block text-gray-800 py-2"
             >
-              Login / Sign In
+              Login 
             </a>
+            <a
+              href="/signup" // or your custom login route
+              className="block text-gray-800 py-2"
+            >
+              Sign up 
+            </a>
+            </>
           )}
 
           {/* Become a Seller */}

@@ -1,7 +1,7 @@
 import React from 'react'
 import BannerNavigation from "./BannerNavigation/page";
 import Carousel from './components/Carousel'
-import Cards from './components/Card';
+import Cards from './components/Cards';
 const page = () => {
   return (
     <div>
