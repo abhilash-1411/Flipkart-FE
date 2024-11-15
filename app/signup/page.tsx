@@ -1,8 +1,8 @@
 'use client';
 import Image from "next/image";
-import Navbar from "../components/Navbar";
 import React, { useState } from "react";
 import { useRouter } from 'next/navigation'; // Import the useRouter hook to redirect
+import axios from 'axios'; // Import axios
 
 const Signup: React.FC = () => {
   const [formData, setFormData] = useState({
@@ -67,30 +67,32 @@ const Signup: React.FC = () => {
       setErrorMessage(""); // Reset any previous error messages
 
       try {
-        // Make the API request to register the user
-        const response = await fetch("https://9d8p7tn1-3000.inc1.devtunnels.ms/auth/register", {
-          method: "POST",
+        // Make the API request to register the user using Axios
+        const response = await axios.post("https://9d8p7tn1-8000.inc1.devtunnels.ms/auth/register", {
+          Name: formData.Name,
+          email: formData.email,
+          password: formData.password,
+        }, {
           headers: {
             "Content-Type": "application/json",
           },
-          body: JSON.stringify({
-            Name: formData.Name,
-            email: formData.email,
-            password: formData.password,
-          }),
         });
 
-        const data = await response.json();
+        // If registration is successful, redirect to login page
+        router.push("/login");
 
-        if (response.ok) {
-          // If registration is successful, redirect to login page
-          router.push("/login");
+      } catch (error: any) {
+        // Handle any errors that occurred during the request
+        if (error.response) {
+          // Request made and server responded with a status other than 2xx
+          setErrorMessage(error.response.data.message || "Something went wrong.");
+        } else if (error.request) {
+          // The request was made but no response was received
+          setErrorMessage("Network error. Please try again.");
         } else {
-          // If there was an error, show it
-          setErrorMessage(data.message || "Something went wrong.");
+          // Something happened in setting up the request
+          setErrorMessage("An unexpected error occurred.");
         }
-      } catch (error) {
-        setErrorMessage("Network error. Please try again.");
       } finally {
         setIsSubmitting(false); // Stop the loading state
       }
@@ -99,7 +101,6 @@ const Signup: React.FC = () => {
 
   return (
     <div>
-      <Navbar />
       <div className="flex justify-center items-center min-h-screen bg-gray-100">
         <div className="flex w-full max-w-5xl bg-white shadow-lg rounded-lg">
           {/* Left Section: Message */}
@@ -131,8 +132,6 @@ const Signup: React.FC = () => {
                   <p className="text-red-500 text-xs mt-1">{errors.Name}</p>
                 )}
               </div>
-
-             
 
               {/* Email */}
               <div className="mb-4">

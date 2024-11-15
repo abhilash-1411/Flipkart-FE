@@ -1,7 +1,12 @@
 import type { Metadata } from "next";
 import localFont from "next/font/local";
 import "./globals.css";
-
+import Footer from "./components/Footer";
+import Navbar from "./components/Navbar";
+import { AuthProvider } from "./context/AuthContext";
+import StoreProvider from "./StoreProvider";
+import { ToastContainer } from 'react-toastify'; // Import ToastContainer
+import 'react-toastify/dist/ReactToastify.css'; // Import the CSS for styling
 
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",
@@ -29,8 +34,25 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
-        {children}
-   
+        <AuthProvider>
+          <Navbar />
+          <StoreProvider>
+            {children}
+          </StoreProvider>
+          <Footer />
+        </AuthProvider>
+        {/* Add ToastContainer here */}
+        <ToastContainer 
+          position="top-right" // You can change the position as needed
+          autoClose={5000} // Duration in milliseconds for auto close
+          hideProgressBar={false} // Show progress bar
+          newestOnTop={false} // Newest toast on top
+          closeOnClick // Close on click
+          rtl={false} // Right to left
+          pauseOnFocusLoss // Pause on focus loss
+          draggable // Allow dragging
+          pauseOnHover // Pause on hover
+        />
       </body>
     </html>
   );

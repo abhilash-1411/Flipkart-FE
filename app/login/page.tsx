@@ -1,6 +1,5 @@
 'use client';
 
-import Navbar from "../components/Navbar";
 import React, { useState } from "react";
 import Image from "next/image";
 
@@ -92,20 +91,25 @@ const Login: React.FC = () => {
 
   return (
     <>
-      <Navbar />
-      <div className="flex justify-center items-center min-h-screen bg-gray-100">
-        <div className="flex w-full max-w-5xl bg-white shadow-lg rounded-lg h-[29rem]">
+      <div className="flex justify-center items-center min-h-screen bg-gray-100 px-4 sm:px-8">
+        <div className="flex flex-col sm:flex-row w-full max-w-5xl bg-white shadow-lg rounded-lg h-auto sm:h-[29rem]">
           {/* Left Section: Message */}
-          <div className="flex flex-col justify-between p-8 bg-colors-blue text-white">
+          <div className="flex flex-col justify-between p-8 bg-colors-blue text-white sm:w-1/2 rounded-t-lg sm:rounded-l-lg sm:rounded-tr-none">
             <h2 className="text-2xl font-semibold mb-4">Welcome Back!</h2>
-            <p className="mb-24 text-gray-200">
+            <p className="mb-8 sm:mb-24 text-gray-200">
               Log in to your account to continue.
             </p>
-            <Image src="/Screenshot-2024-11-06 154450.png" alt="" width={300} height={300} />
+            <Image
+              src="/Screenshot-2024-11-06 154450.png"
+              alt="Login Illustration"
+              width={300}
+              height={300}
+              className="w-full max-w-xs mx-auto sm:max-w-none sm:w-2/3"
+            />
           </div>
 
           {/* Right Section: Form Fields */}
-          <div className="flex-1 p-8">
+          <div className="flex-1 p-8 sm:p-12">
             <form onSubmit={handleSubmit}>
               {/* Email */}
               <div className="mb-4">
@@ -151,14 +155,6 @@ const Login: React.FC = () => {
               </div>
             </form>
 
-            {/* Display login error message */}
-            {loginError && (
-              <div className="mt-4 text-red-500 text-center">
-                <p>{loginError}</p>
-              </div>
-            )}
-
-            {/* Sign Up Link */}
             <div className="mt-4 text-center">
               <a href="/signup" className="text-blue-600 hover:underline">
                 New User? Sign up
