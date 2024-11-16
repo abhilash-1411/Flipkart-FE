@@ -94,7 +94,8 @@ const CardGrid: React.FC = () => {
 
   return (
     <>
-     <div className="grid grid-cols-3 gap-4">
+     <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
+        {/* Reusable CardGrid Section */}
         {Array(3).fill(null).map((_, index) => (
           <div className="max-w-8xl mx-auto p-2" key={index}>
             <div className="bg-white rounded-lg shadow-lg p-4">
