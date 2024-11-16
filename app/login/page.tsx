@@ -58,7 +58,7 @@ const Login: React.FC = () => {
 
       try {
         // Make API request
-        const response = await fetch("https://9d8p7tn1-3000.inc1.devtunnels.ms/auth/login", {
+        const response = await fetch("https://gqxs8m4j-3000.inc1.devtunnels.ms/auth/login", {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
