@@ -2,7 +2,7 @@
 import React, { useState, useEffect } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faChevronRight } from "@fortawesome/free-solid-svg-icons";
-import { useRouter } from "next/navigation"; // Directly use the useRouter hook
+import { useRouter } from "next/navigation"; 
 
 interface CardData {
   id: number;
@@ -15,7 +15,7 @@ const Cards: React.FC = () => {
   const [currentSlide, setCurrentSlide] = useState(0);
   const [itemsPerSlide, setItemsPerSlide] = useState(4);
   const [isMobile, setIsMobile] = useState(false);
-  const router = useRouter();  // Initialize the router directly at the top of the component
+  const router = useRouter();  
 
   const cards: CardData[] = [
     {
@@ -48,12 +48,12 @@ const Cards: React.FC = () => {
       title: "Product 5",
       price: "₹2999",
     },
-    {
-      id: 6,
-      image: "https://rukminim1.flixcart.com/fk-p-flap/1600/270/image/2e6d5e4191298924.jpg?q=20",
-      title: "Product 6",
-      price: "₹3499",
-    },
+    // {
+    //   id: 6,
+    //   image: "https://rukminim1.flixcart.com/fk-p-flap/1600/270/image/2e6d5e4191298924.jpg?q=20",
+    //   title: "Product 6",
+    //   price: "₹3499",
+    // },
   ];
 
   useEffect(() => {
@@ -94,7 +94,8 @@ const Cards: React.FC = () => {
   };
 
   const handleCardClick = (id: number) => {
-    router.push(`/card/${id}`);  // Use the router to navigate directly
+    alert(`Navigating to card with ID: ${id}`);
+    router.push(`/card/${id}`);  
   };
 
   return (
@@ -109,7 +110,7 @@ const Cards: React.FC = () => {
               <div
                 key={card.id}
                 className="w-full sm:w-[20rem] md:w-[22rem] lg:w-[24rem] mx-auto flex flex-row items-center cursor-pointer"
-                onClick={() => handleCardClick(card.id)} // Trigger navigation on click
+                onClick={() => handleCardClick(card.id)} 
               >
                 <div className="w-[20%]">
                   <img
@@ -142,7 +143,7 @@ const Cards: React.FC = () => {
               <div
                 key={card.id}
                 className="w-[90%] sm:w-[20rem] md:w-[22rem] lg:w-[24rem] flex-shrink-0 px-4 p-4 cursor-pointer"
-                onClick={() => handleCardClick(card.id)} // Trigger navigation on click
+                onClick={() => handleCardClick(card.id)} 
               >
                 <div className="bg-white rounded-lg shadow-lg overflow-hidden">
                   <img
