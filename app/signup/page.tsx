@@ -61,6 +61,7 @@ const Signup: React.FC = () => {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
+    
     if (validateForm()) {
       setIsSubmitting(true);
       setErrorMessage(""); // Reset any previous error messages
@@ -99,28 +100,25 @@ const Signup: React.FC = () => {
 
   return (
     <div>
-      <div className="flex justify-center items-center min-h-screen bg-gray-100">
-        <div className="flex w-full max-w-5xl bg-white shadow-lg rounded-lg">
+      <div className="flex justify-center items-center min-h-screen bg-gray-100 px-4">
+      <div className="flex flex-col lg:flex-row w-full max-w-5xl bg-white shadow-lg rounded-lg">
+
           {/* Left Section: Message */}
-          <div className="flex flex-col justify-around p-8 bg-blue-500 text-white">
+          <div className="flex flex-col justify-around p-8 bg-blue-500 text-white lg:w-1/2">
             <h2 className="text-2xl font-semibold mb-4">
               Looks like you're new here!
             </h2>
             <p className="mb-24 text-gray-200">
               Sign up with your email number to get started.
             </p>
-            <Image 
-              src="/Screenshot-2024-11-06 154450.png" 
-              alt="" 
-              width={300} 
-              height={300} 
-            />
+           
+            <Image src="/Screenshot-2024-11-06 154450.png" alt="" width={300} height={300} />
           </div>
 
           {/* Right Section: Form Fields */}
           <div className="flex-1 p-8">
             <form onSubmit={handleSubmit}>
-              {/* Name */}
+              {/*  Name */}
               <div className="mb-4">
                 <label className="block text-sm font-medium text-gray-600">Name</label>
                 <input
