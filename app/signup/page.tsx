@@ -2,17 +2,16 @@
 import Image from "next/image";
 import React, { useState } from "react";
 import { useRouter } from 'next/navigation'; // Import the useRouter hook to redirect
-import axios from 'axios'; // Import axios
-
+import { toast } from "react-toastify";
 const Signup: React.FC = () => {
   const [formData, setFormData] = useState({
-    Name: "",
+    name: "",
     email: "",
     password: "",
   });
 
   const [errors, setErrors] = useState({
-    Name: "",
+    name: "",
     email: "",
     password: "",
   });
@@ -35,8 +34,8 @@ const Signup: React.FC = () => {
     let isValid = true;
 
     // Validate Name
-    if (!formData.Name) {
-      newErrors.Name = "Name is required.";
+    if (!formData.name) {
+      newErrors.name = "Name is required.";
       isValid = false;
     }
 
@@ -61,38 +60,39 @@ const Signup: React.FC = () => {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    
+
     if (validateForm()) {
       setIsSubmitting(true);
       setErrorMessage(""); // Reset any previous error messages
 
       try {
-        // Make the API request to register the user using Axios
-        const response = await axios.post("https://9d8p7tn1-8000.inc1.devtunnels.ms/auth/register", {
-          Name: formData.Name,
-          email: formData.email,
-          password: formData.password,
-        }, {
+        // Make the API request to register the user using fetch
+        const response = await fetch("https://xh2vgz5c-3001.inc1.devtunnels.ms/auth/register", {
+          method: "POST",
           headers: {
             "Content-Type": "application/json",
           },
+          body: JSON.stringify({
+            name: formData.name,
+            email: formData.email,
+            password: formData.password,
+          }),
         });
 
+        // Check if the response is successful
+        if (!response.ok) {
+          const errorData = await response.json();
+          throw new Error(errorData?.message || "Something went wrong.");
+        }
+
         // If registration is successful, redirect to login page
+        toast.success("Registration successful! Redirecting to login...");
+
         router.push("/login");
 
       } catch (error: any) {
-        // Handle any errors that occurred during the request
-        if (error.response) {
-          // Request made and server responded with a status other than 2xx
-          setErrorMessage(error.response.data.message || "Something went wrong.");
-        } else if (error.request) {
-          // The request was made but no response was received
-          setErrorMessage("Network error. Please try again.");
-        } else {
-          // Something happened in setting up the request
-          setErrorMessage("An unexpected error occurred.");
-        }
+        console.error("Fetch Error:", error); // Log the full error for debugging
+        setErrorMessage(error.message || "An unexpected error occurred.");
       } finally {
         setIsSubmitting(false); // Stop the loading state
       }
@@ -111,25 +111,30 @@ const Signup: React.FC = () => {
             <p className="mb-24 text-gray-200">
               Sign up with your email number to get started.
             </p>
-            <Image src="/Screenshot-2024-11-06 154450.png" alt="" width={300} height={300} />
+            <Image 
+              src="/Screenshot-2024-11-06 154450.png" 
+              alt="" 
+              width={300} 
+              height={300} 
+            />
           </div>
 
           {/* Right Section: Form Fields */}
           <div className="flex-1 p-8">
             <form onSubmit={handleSubmit}>
-              {/*  Name */}
+              {/* Name */}
               <div className="mb-4">
                 <label className="block text-sm font-medium text-gray-600">Name</label>
                 <input
                   type="text"
-                  name="Name"
-                  value={formData.Name}
+                  name="name"  // Corrected to match the state name
+                  value={formData.name}
                   onChange={handleInputChange}
                   className="w-full px-4 py-2 mt-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
                   placeholder="Enter your name"
                 />
-                {errors.Name && (
-                  <p className="text-red-500 text-xs mt-1">{errors.Name}</p>
+                {errors.name && (
+                  <p className="text-red-500 text-xs mt-1">{errors.name}</p>
                 )}
               </div>
 

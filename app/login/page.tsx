@@ -1,18 +1,30 @@
-'use client';
+// components/Login.tsx
+'use client'
 
 import React, { useState } from "react";
 import Image from "next/image";
+import { useRouter } from "next/navigation";
+import { useAuth } from "../context/AuthContext";
+import { toast } from "react-toastify";
+import 'react-toastify/dist/ReactToastify.css';  // Import the styles
+
+// Initialize toast container (for global toasts)
 
 const Login: React.FC = () => {
   const [formData, setFormData] = useState({
-    email: "",  // Changed from 'username' to 'email'
+    email: "",
     password: "",
   });
 
   const [errors, setErrors] = useState({
-    email: "",  // Changed from 'username' to 'email'
+    email: "",
     password: "",
   });
+
+  const [isLoading, setIsLoading] = useState(false);
+  const [loginError, setLoginError] = useState<string>("");
+  const { login } = useAuth(); // Get login function from AuthContext
+  const router = useRouter();  // For redirecting after login
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
@@ -26,17 +38,14 @@ const Login: React.FC = () => {
     const newErrors: any = {};
     let isValid = true;
 
-    // Validate Email
     if (!formData.email) {
       newErrors.email = "Email is required.";
       isValid = false;
     } else if (!/\S+@\S+\.\S+/.test(formData.email)) {
-      // Validate email format
       newErrors.email = "Please enter a valid email.";
       isValid = false;
     }
 
-    // Validate Password
     if (!formData.password) {
       newErrors.password = "Password is required.";
       isValid = false;
@@ -46,88 +55,122 @@ const Login: React.FC = () => {
     return isValid;
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+
     if (validateForm()) {
-      console.log("Login data submitted", formData);
-      // Handle login logic here (API call, validation, etc.)
+      setIsLoading(true);
+      setLoginError("");
+
+      try {
+        const response = await fetch("https://xh2vgz5c-3001.inc1.devtunnels.ms/auth/login", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            email: formData.email,
+            password: formData.password,
+          }),
+        });
+
+        const data = await response.json();
+
+        if (response.ok) {
+          // Successful login
+          console.log("Login successful:", data);
+          login(data.token);  // Update context with token
+          toast.success("Logged in successfully!");  // Show toast
+
+          // Redirect to homepage after 2 seconds
+          setTimeout(() => {
+            router.push("/");  // Navigate to the home page
+          }, 2000);
+        } else {
+          setLoginError(data.message || "Login failed. Please try again.");
+        }
+      } catch (error) {
+        setLoginError("An error occurred. Please try again later.");
+        console.error("Login API error:", error);
+      } finally {
+        setIsLoading(false);
+      }
     }
   };
 
   return (
-    <>
-      <div className="flex justify-center items-center min-h-screen bg-gray-100 px-4 sm:px-8">
-        <div className="flex flex-col sm:flex-row w-full max-w-5xl bg-white shadow-lg rounded-lg h-auto sm:h-[29rem]">
-          {/* Left Section: Message */}
-          <div className="flex flex-col justify-between p-8 bg-colors-blue text-white sm:w-1/2 rounded-t-lg sm:rounded-l-lg sm:rounded-tr-none">
-            <h2 className="text-2xl font-semibold mb-4">Welcome Back!</h2>
-            <p className="mb-8 sm:mb-24 text-gray-200">
-              Log in to your account to continue.
-            </p>
-            <Image
-              src="/Screenshot-2024-11-06 154450.png"
-              alt="Login Illustration"
-              width={300}
-              height={300}
-              className="w-full max-w-xs mx-auto sm:max-w-none sm:w-2/3"
-            />
-          </div>
+    <div className="flex justify-center items-center min-h-screen bg-gray-100 px-4 sm:px-8">
+      <div className="flex flex-col sm:flex-row w-full max-w-5xl bg-white shadow-lg rounded-lg h-auto sm:h-[29rem]">
+        {/* Left Section: Message */}
+        <div className="flex flex-col justify-between p-8 bg-colors-blue text-white sm:w-1/2 rounded-t-lg sm:rounded-l-lg sm:rounded-tr-none">
+          <h2 className="text-2xl font-semibold mb-4">Welcome Back!</h2>
+          <p className="mb-8 sm:mb-24 text-gray-200">
+            Log in to your account to continue.
+          </p>
+          <Image
+            src="/Screenshot-2024-11-06 154450.png"
+            alt="Login Illustration"
+            width={300}
+            height={300}
+            className="w-full max-w-xs mx-auto sm:max-w-none sm:w-2/3"
+          />
+        </div>
 
-          {/* Right Section: Form Fields */}
-          <div className="flex-1 p-8 sm:p-12">
-            <form onSubmit={handleSubmit}>
-              {/* Email */}
-              <div className="mb-4">
-                <label className="block text-sm font-medium text-gray-600">Email</label>
-                <input
-                  type="email"  // Ensuring it's an email input field
-                  name="email"  // Changed from 'username' to 'email'
-                  value={formData.email}
-                  onChange={handleInputChange}
-                  className="w-full px-4 py-2 mt-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-                  placeholder="Enter your email"
-                />
-                {errors.email && (
-                  <p className="text-red-500 text-xs mt-1">{errors.email}</p>
-                )}
-              </div>
-
-              {/* Password */}
-              <div className="mb-4">
-                <label className="block text-sm font-medium text-gray-600">Password</label>
-                <input
-                  type="password"
-                  name="password"
-                  value={formData.password}
-                  onChange={handleInputChange}
-                  className="w-full px-4 py-2 mt-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-                  placeholder="Enter your password"
-                />
-                {errors.password && (
-                  <p className="text-red-500 text-xs mt-1">{errors.password}</p>
-                )}
-              </div>
-
-              {/* Submit Button */}
-              <div>
-                <button
-                  type="submit"
-                  className="w-full py-2 px-4 bg-orange-600 text-white rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500"
-                >
-                  Log In
-                </button>
-              </div>
-            </form>
-
-            <div className="mt-4 text-center">
-              <a href="/signup" className="text-blue-600 hover:underline">
-                New User? Sign up
-              </a>
+        {/* Right Section: Form Fields */}
+        <div className="flex-1 p-8 sm:p-12">
+          <form onSubmit={handleSubmit}>
+            {/* Email */}
+            <div className="mb-4">
+              <label className="block text-sm font-medium text-gray-600">Email</label>
+              <input
+                type="email"
+                name="email"
+                value={formData.email}
+                onChange={handleInputChange}
+                className="w-full px-4 py-2 mt-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                placeholder="Enter your email"
+              />
+              {errors.email && (
+                <p className="text-red-500 text-xs mt-1">{errors.email}</p>
+              )}
             </div>
+
+            {/* Password */}
+            <div className="mb-4">
+              <label className="block text-sm font-medium text-gray-600">Password</label>
+              <input
+                type="password"
+                name="password"
+                value={formData.password}
+                onChange={handleInputChange}
+                className="w-full px-4 py-2 mt-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                placeholder="Enter your password"
+              />
+              {errors.password && (
+                <p className="text-red-500 text-xs mt-1">{errors.password}</p>
+              )}
+            </div>
+
+            {/* Submit Button */}
+            <div>
+              <button
+                type="submit"
+                className="w-full py-2 px-4 bg-orange-600 text-white rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                disabled={isLoading}
+              >
+                {isLoading ? "Logging in..." : "Log In"}
+              </button>
+            </div>
+          </form>
+
+          <div className="mt-4 text-center">
+            <a href="/signup" className="text-blue-600 hover:underline">
+              New User? Sign up
+            </a>
           </div>
         </div>
       </div>
-    </>
+    </div>
   );
 };
 
