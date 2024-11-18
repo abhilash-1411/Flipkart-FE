@@ -7,7 +7,7 @@ import SideBar from './SideBar';
 const Navbar: React.FC = () => {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const [isSidebarOpen, setIsSidebarOpen] = useState(false); // New state for sidebar toggle
-  const { isAuthenticated, logout } = useAuth();
+  const { isAuthenticated, logout,username } = useAuth();
  
   const handleMouseEnter = () => setIsDropdownOpen(true);
   const handleMouseLeave = () => setIsDropdownOpen(false);
@@ -44,7 +44,7 @@ const Navbar: React.FC = () => {
           <div className="w-1/4 sm:w-[15%]">
             <a
               className="YLCOuy px-3 py-2 rounded-md hover:text-white"
-              href="#"
+              href="/"
               aria-label="Flipkart"
               title="Flipkart"
             >
@@ -152,7 +152,25 @@ const Navbar: React.FC = () => {
                       fill="currentColor"
                     />
                   </svg>
-                  <span className="text-gray-600 group-hover:text-white">Logout</span>
+                  <span className="text-gray-600 group-hover:text-white">{username}</span>
+                  {isDropdownOpen && (
+                    <div className="absolute top-11 right-0 w-40 bg-white border border-gray-200 rounded-md shadow-lg z-10 group-hover:bg-white-600">
+                      <div className="">
+                        <a
+                          href="/profile"
+                          className="block px-4 py-2 text-sm text-gray-700  hover:bg-slate-100"
+                        >
+                          View Profile
+                        </a>
+                        <a
+                          href="/logout"
+                          className="block px-4 py-2 text-sm text-gray-700  hover:bg-slate-100"
+                        >
+                          Logout
+                        </a>
+                      </div>
+                    </div>
+                  )}
                 </button>
               ) : (
                 <button className="hover:bg-blue-600 px-3 py-2 rounded-md flex items-center gap-2 text-[19px] group">

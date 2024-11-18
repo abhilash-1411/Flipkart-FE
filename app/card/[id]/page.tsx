@@ -34,6 +34,7 @@ const CardDetails: React.FC = () => {
   const router = useRouter(); // Use useRouter for navigation
   const { id } = params; // Get the dynamic 'id' from the URL
   const dispatch = useDispatch();
+  
 
   // Cards data with detailed information
   const cards: CardData[] = [
