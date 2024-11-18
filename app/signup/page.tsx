@@ -2,7 +2,7 @@
 import Image from "next/image";
 import React, { useState } from "react";
 import { useRouter } from 'next/navigation'; // Import the useRouter hook to redirect
-
+import { toast } from "react-toastify";
 const Signup: React.FC = () => {
   const [formData, setFormData] = useState({
     name: "",
@@ -67,7 +67,7 @@ const Signup: React.FC = () => {
 
       try {
         // Make the API request to register the user using fetch
-        const response = await fetch("https://gqxs8m4j-3000.inc1.devtunnels.ms/auth/register", {
+        const response = await fetch("https://xh2vgz5c-3001.inc1.devtunnels.ms/auth/register", {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
@@ -86,6 +86,8 @@ const Signup: React.FC = () => {
         }
 
         // If registration is successful, redirect to login page
+        toast.success("Registration successful! Redirecting to login...");
+
         router.push("/login");
 
       } catch (error: any) {
