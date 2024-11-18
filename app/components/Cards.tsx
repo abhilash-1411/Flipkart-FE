@@ -95,7 +95,7 @@ const Cards: React.FC = () => {
 
   const handleCardClick = (id: number) => {
     alert(`Navigating to card with ID: ${id}`);
-    router.push(`/card/${id}`);  
+    router.push(`/card/${id}`);  // Use the router to navigate directly
   };
 
   return (
