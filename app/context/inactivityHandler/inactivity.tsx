@@ -1,9 +1,9 @@
 export function setupInactivityTimer(logout: () => void) {
   let inactivityTimer: NodeJS.Timeout;
   //30 min
-  const INACTIVITY_LIMIT = 30 * 60 * 1000;
+  const INACTIVITY_LIMIT = 300 * 60 * 1000;
 
-  // 30 seconds
+  // 10 seconds
   // const INACTIVITY_LIMIT = 10 * 1000;
 
 

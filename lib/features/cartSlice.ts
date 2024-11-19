@@ -8,7 +8,7 @@ interface CartItem {
   offers: string;
   brand: string;
   rating: number;
-  quantity: number; 
+  quantity: number;
 }
 
 interface CartState {
@@ -37,8 +37,20 @@ const cartSlice = createSlice({
     clearCart: (state) => {
       state.items = [];
     },
+    increaseQuantity: (state, action: PayloadAction<number>) => {
+      const item = state.items.find(item => item.id === action.payload);
+      if (item) {
+        item.quantity += 1; // Increase the quantity by 1
+      }
+    },
+    decreaseQuantity: (state, action: PayloadAction<number>) => {
+      const item = state.items.find(item => item.id === action.payload);
+      if (item && item.quantity > 1) {
+        item.quantity -= 1; // Decrease the quantity by 1 (but not below 1)
+      }
+    },
   },
 });
 
-export const { addItem, removeItem, clearCart } = cartSlice.actions;
+export const { addItem, removeItem, clearCart, increaseQuantity, decreaseQuantity } = cartSlice.actions;
 export default cartSlice.reducer;

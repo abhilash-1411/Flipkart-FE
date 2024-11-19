@@ -4,6 +4,7 @@ import React, { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import { addItem } from "@/lib/features/cartSlice";
 import { toast } from "react-toastify"; // Import Toastify for notifications
+import { useAuth } from "@/app/context/AuthContext";
 
 interface CardData {
   id: number;
@@ -34,6 +35,8 @@ const CardDetails: React.FC = () => {
   const router = useRouter(); // Use useRouter for navigation
   const { id } = params; // Get the dynamic 'id' from the URL
   const dispatch = useDispatch();
+  const {isAuthenticated }= useAuth();
+
   
 
   // Cards data with detailed information
@@ -195,12 +198,22 @@ const CardDetails: React.FC = () => {
     return <div>Card not found</div>;
   }
      const handleAddToCart = () => {
-    const itemToAdd = { ...card, quantity: 1 }; // Create a new object with quantity
-    dispatch(addItem(itemToAdd)); // Dispatch addItem action with updated card data
-    toast.success(`${card.title} added to cart!`); // Notify user
-    setTimeout(() => {
-    router.push('/cart'); // Navigate to the cart page after a short delay
-  }, 2000);  };
+      if (isAuthenticated) {
+        const itemToAdd = { ...card, quantity: 1 }; // Create a new object with quantity
+        dispatch(addItem(itemToAdd)); // Dispatch addItem action with updated card data
+        toast.success(`${card.title} added to cart!`); // Notify user
+        setTimeout(() => {
+        router.push('/cart'); // Navigate to the cart page after a short delay
+      }, 2000);  
+      }
+      else
+      {
+        toast.error("User is not login")
+        setTimeout(() => {
+          router.push('/login'); 
+        }, 2000); 
+      }
+   };
 
   return (
     <div className="p-4 max-w-7xl mx-auto">

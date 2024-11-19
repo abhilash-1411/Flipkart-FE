@@ -9,36 +9,55 @@ const Signup: React.FC = () => {
     email: "",
     password: "",
   });
- 
+
   const [errors, setErrors] = useState({
     name: "",
     email: "",
     password: "",
   });
- 
+
   const [isSubmitting, setIsSubmitting] = useState(false); // To handle the submitting state
   const [errorMessage, setErrorMessage] = useState(""); // For API error messages
- 
-  const router = useRouter(); // For redirecting to login page after successful registration
- 
+  const [passwordStrength, setPasswordStrength] = useState<string>("");
+
+  const router = useRouter(); 
+
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
+
     setFormData((prev) => ({
       ...prev,
       [name]: value,
     }));
+
+    // Check for password strength if the input is for the password field
+    if (name === "password") {
+      const strength = evaluatePasswordStrength(value);
+      setPasswordStrength(strength);
+    }
   };
- 
+  const evaluatePasswordStrength = (password: string): string => {
+    let strength = 0;
+    if (password.length >= 8) strength++;
+    if (/[A-Z]/.test(password)) strength++; 
+    if (/[0-9]/.test(password)) strength++; 
+    if (/[@$!%*?&#]/.test(password)) strength++; 
+    if (strength <= 1) return "Weak";
+    if (strength === 2) return "Medium";
+    return "Strong";
+  };
+
+
   const validateForm = () => {
     const newErrors: any = {};
     let isValid = true;
- 
+
     // Validate Name
     if (!formData.name) {
       newErrors.name = "Name is required.";
       isValid = false;
     }
- 
+
     // Validate Email
     if (!formData.email) {
       newErrors.email = "Email is required.";
@@ -47,24 +66,24 @@ const Signup: React.FC = () => {
       newErrors.email = "Please enter a valid email.";
       isValid = false;
     }
- 
+
     // Validate Password
     if (!formData.password) {
       newErrors.password = "Password is required.";
       isValid = false;
     }
- 
+
     setErrors(newErrors);
     return isValid;
   };
- 
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
- 
+
     if (validateForm()) {
       setIsSubmitting(true);
       setErrorMessage(""); // Reset any previous error messages
- 
+
       try {
         // Make the API request to register the user using fetch
         const response = await fetch("https://xh2vgz5c-3001.inc1.devtunnels.ms/auth/register", {
@@ -78,20 +97,20 @@ const Signup: React.FC = () => {
             password: formData.password,
           }),
         });
- 
+
         // Check if the response is successful
         if (!response.ok) {
           const errorData = await response.json();
           throw new Error(errorData?.message || "Something went wrong.");
         }
- 
+
         // If registration is successful, redirect to login page
         toast.success("Registration successful! Redirecting to login...");
- 
+
         setTimeout(() => {
           router.push("/login");  // Navigate to the login page
         }, 2000);
- 
+
       } catch (error: any) {
         console.error("Fetch Error:", error); // Log the full error for debugging
         setErrorMessage(error.message || "An unexpected error occurred.");
@@ -100,7 +119,7 @@ const Signup: React.FC = () => {
       }
     }
   };
- 
+
   return (
     <div>
       <div className="flex justify-center items-center min-h-screen bg-gray-100">
@@ -120,7 +139,7 @@ const Signup: React.FC = () => {
               height={300}
             />
           </div>
- 
+
           {/* Right Section: Form Fields */}
           <div className="flex-1 p-8">
             <form onSubmit={handleSubmit}>
@@ -139,7 +158,7 @@ const Signup: React.FC = () => {
                   <p className="text-red-500 text-xs mt-1">{errors.name}</p>
                 )}
               </div>
- 
+
               {/* Email */}
               <div className="mb-4">
                 <label className="block text-sm font-medium text-gray-600">Email</label>
@@ -155,7 +174,7 @@ const Signup: React.FC = () => {
                   <p className="text-red-500 text-xs mt-1">{errors.email}</p>
                 )}
               </div>
- 
+
               {/* Password */}
               <div className="mb-4">
                 <label className="block text-sm font-medium text-gray-600">Password</label>
@@ -167,11 +186,18 @@ const Signup: React.FC = () => {
                   className="w-full px-4 py-2 mt-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
                   placeholder="Enter your password"
                 />
-                {errors.password && (
-                  <p className="text-red-500 text-xs mt-1">{errors.password}</p>
-                )}
+                <p
+                  className={`text-xs mt-1 ${passwordStrength === "Weak"
+                    ? "text-red-500"
+                    : passwordStrength === "Medium"
+                      ? "text-yellow-500"
+                      : "text-green-500"
+                    }`}
+                >
+                  {passwordStrength && `Password Strength: ${passwordStrength}`}
+                </p>
               </div>
- 
+
               {/* Submit Button */}
               <div>
                 <button
@@ -182,7 +208,7 @@ const Signup: React.FC = () => {
                   {isSubmitting ? "Registering..." : "Continue"}
                 </button>
               </div>
- 
+
               {/* Display error message */}
               {errorMessage && (
                 <div className="mt-4 text-red-500 text-center">
@@ -190,7 +216,7 @@ const Signup: React.FC = () => {
                 </div>
               )}
             </form>
- 
+
             {/* Login Link */}
             <div className="mt-4 text-center">
               <a href="/login" className="text-blue-600 hover:underline">
@@ -203,5 +229,5 @@ const Signup: React.FC = () => {
     </div>
   );
 };
- 
+
 export default Signup;

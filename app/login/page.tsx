@@ -20,7 +20,6 @@ const Login: React.FC = () => {
     email: "",
     password: "",
   });
-
   const [isLoading, setIsLoading] = useState(false);
   const [loginError, setLoginError] = useState<string>("");
   const { login } = useAuth(); // Get login function from AuthContext
@@ -86,7 +85,10 @@ const Login: React.FC = () => {
           setTimeout(() => {
             router.push("/");  // Navigate to the home page
           }, 2000);
-        } else {
+        }else if (response.status === 401) {
+          setLoginError('Invalid email or password.');
+        } 
+        else {
           setLoginError(data.message || "Login failed. Please try again.");
         }
       } catch (error) {
@@ -119,6 +121,12 @@ const Login: React.FC = () => {
         {/* Right Section: Form Fields */}
         <div className="flex-1 p-8 sm:p-12">
           <form onSubmit={handleSubmit}>
+            {/* Error Message */}
+            {loginError && (
+              <div className="mb-4 p-2 text-sm text-red-600 border border-red-500 rounded bg-red-50">
+                {loginError}
+              </div>
+            )}
             {/* Email */}
             <div className="mb-4">
               <label className="block text-sm font-medium text-gray-600">Email</label>
