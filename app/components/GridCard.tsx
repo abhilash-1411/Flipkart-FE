@@ -9,8 +9,10 @@ interface CardData {
   price: string;
 }
 
-
-const Card: React.FC<{ card: CardData; onClick: (id: number) => void }> = ({ card, onClick }) => {
+const Card: React.FC<{ card: CardData; onClick: (id: number) => void }> = ({
+  card,
+  onClick,
+}) => {
   return (
     <div
       key={card.id}
@@ -58,7 +60,8 @@ const CardGrid: React.FC = () => {
     },
     {
       id: 4,
-      image: "https://rukminim1.flixcart.com/fk-p-flap/1600/270/image/5d51dbf60f2f8d4d.jpg?q=20",
+      image:
+        "https://rukminim1.flixcart.com/fk-p-flap/1600/270/image/5d51dbf60f2f8d4d.jpg?q=20",
       title: "Product 4",
       price: "₹2499",
     },
@@ -79,7 +82,7 @@ const CardGrid: React.FC = () => {
   }, []);
 
   const handleCardClick = (id: number) => {
-    router.push(`/card/${id}`); 
+    router.push(`/card/${id}`);
   };
 
   const renderCardGrid = () => {
@@ -94,16 +97,31 @@ const CardGrid: React.FC = () => {
 
   return (
     <>
-     <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
         {/* Reusable CardGrid Section */}
-        {Array(3).fill(null).map((_, index) => (
-          <div className="max-w-8xl mx-auto p-2" key={index}>
-            <div className="bg-white rounded-lg shadow-lg p-4">
-              <h2 className="text-xl font-semibold mb-4">Featured Products</h2>
-              {renderCardGrid()}
+        {Array(3)
+          .fill(null)
+          .map((_, index) => (
+            <div className="max-w-8xl mx-auto p-2" key={index}>
+              <div className="bg-white rounded-lg shadow-lg p-4">
+                <div className="flex justify-between">
+                  <h2 className="text-xl font-semibold mb-4">
+                    Featured Products
+                  </h2>
+                  <svg width="20" height="20" fill="none" viewBox="0 0 17 17" className="bg-blue-700 rounded-full ">
+                    <path
+                      d="m6.627 3.749 5 5-5 5"
+                      stroke="#FFFFFF" 
+                      strokeWidth="1.2"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                    ></path>
+                  </svg>
+                </div>
+                {renderCardGrid()}
+              </div>
             </div>
-          </div>
-        ))}
+          ))}
       </div>
     </>
   );
