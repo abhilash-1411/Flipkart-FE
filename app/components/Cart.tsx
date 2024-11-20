@@ -1,8 +1,7 @@
-// components/Cart.tsx
 'use client'
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { removeItem, clearCart } from '@/lib/features/cartSlice';
+import { removeItem, clearCart, increaseQuantity, decreaseQuantity } from '@/lib/features/cartSlice';
 import { toast } from 'react-toastify';
 
 // Define the CartItem interface
@@ -14,21 +13,33 @@ interface CartItem {
   offers: string;
   brand: string;
   rating: number;
-  quantity: number; 
+  quantity: number;
 }
 
 const Cart: React.FC = () => {
   const dispatch = useDispatch();
   const cartItems = useSelector((state: { cart: { items: CartItem[] } }) => state.cart.items); // Adjust the type as needed
 
+  // Handle item removal
   const handleRemoveItem = (itemId: number) => {
     dispatch(removeItem(itemId));
     toast.success('Item removed from cart!');
   };
 
+  // Handle cart clearing
   const handleClearCart = () => {
     dispatch(clearCart());
     toast.success('Cart cleared!');
+  };
+
+  // Handle increasing item quantity
+  const handleIncreaseQuantity = (itemId: number) => {
+    dispatch(increaseQuantity(itemId));  // Dispatch the increase action
+  };
+
+  // Handle decreasing item quantity
+  const handleDecreaseQuantity = (itemId: number) => {
+    dispatch(decreaseQuantity(itemId));  // Dispatch the decrease action
   };
 
   return (
@@ -48,7 +59,23 @@ const Cart: React.FC = () => {
                   <div className="ml-4">
                     <h3 className="text-lg font-semibold">{item.title}</h3>
                     <p className="text-gray-600">Price: <span className="font-bold">{item.price}</span></p>
-                    <p className="text-gray-600">Quantity: <span className="font-bold">{item.quantity}</span></p>
+                    <p className="text-gray-600">Quantity:
+                      <span className="font-bold">{item.quantity}</span>
+                      <div className="flex items-center mt-2">
+                        <button
+                          onClick={() => handleIncreaseQuantity(item.id)}
+                          className="bg-gray-200 text-gray-700 py-1 px-3 rounded hover:bg-gray-300 transition mr-2"
+                        >
+                          +
+                        </button>
+                        <button
+                          onClick={() => handleDecreaseQuantity(item.id)}
+                          className="bg-gray-200 text-gray-700 py-1 px-3 rounded hover:bg-gray-300 transition"
+                        >
+                          -
+                        </button>
+                      </div>
+                    </p>
                     <p className="text-sm text-gray-500">{item.offers}</p>
                   </div>
                 </div>

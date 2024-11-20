@@ -1,9 +1,11 @@
 "use client";
-import { useParams,useRouter } from "next/navigation"; // Correct hook for dynamic route parameters in 'app' directory
+
+import { useParams, useRouter } from "next/navigation"; // Correct hook for dynamic route parameters in 'app' directory
 import React, { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import { addItem } from "@/lib/features/cartSlice";
 import { toast } from "react-toastify"; // Import Toastify for notifications
+import { useAuth } from "@/app/context/AuthContext";
 
 interface CardData {
   id: number;
@@ -34,8 +36,9 @@ const CardDetails: React.FC = () => {
   const router = useRouter(); // Use useRouter for navigation
   const { id } = params; // Get the dynamic 'id' from the URL
   const dispatch = useDispatch();
+  const { isAuthenticated } = useAuth(); // Get authentication status
 
-  // Cards data with detailed information
+  // Cards data with detailed information (Can be fetched from an API or local storage)
   const cards: CardData[] = [
     {
       id: 1,
@@ -59,118 +62,8 @@ const CardDetails: React.FC = () => {
         { user: "User 2", review: "Worth the price.", rating: 4 },
       ],
     },
-    {
-      id: 2,
-      image: "https://rukminim1.flixcart.com/fk-p-flap/1600/270/image/8acfb721c7bef89a.jpg?q=20",
-      title: "Product 2",
-      price: "₹1499",
-      offers: "Buy 1 Get 1 free",
-      brand: "Brand X",
-      rating: 3.9,
-      description: "Product 2 is a high-quality product with special offers.",
-      specs: {
-        weight: "1.2 kg",
-        dimensions: "12 x 8 x 4 cm",
-        color: "Red",
-        warranty: "1 Year",
-        deliveryTime: "5-7 days",
-        returnPolicy: "15 days return policy",
-      },
-      reviews: [
-        { user: "User 3", review: "Good quality.", rating: 4 },
-        { user: "User 4", review: "Value for money.", rating: 4 },
-      ],
-    },
-    {
-      id: 3,
-      image: "https://rukminim1.flixcart.com/fk-p-flap/1600/270/image/f991d1be51d2f0c2.jpg?q=20",
-      title: "Product 3",
-      price: "₹1999",
-      offers: "Flat 15% off on orders above ₹1500",
-      brand: "Brand Y",
-      rating: 4.5,
-      description: "Product 3 offers excellent value and performance, perfect for your daily needs.",
-      specs: {
-        weight: "1.0 kg",
-        dimensions: "18 x 12 x 7 cm",
-        color: "Blue",
-        warranty: "1 Year",
-        deliveryTime: "2-4 days",
-        returnPolicy: "10 days return policy",
-      },
-      reviews: [
-        { user: "User 5", review: "Amazing product!", rating: 5 },
-        { user: "User 6", review: "Satisfactory performance.", rating: 4 },
-      ],
-    },
-    {
-      id: 4,
-      image: "https://rukminim1.flixcart.com/fk-p-flap/1600/270/image/2e6d5e4191298924.jpg?q=20",
-      title: "Product 4",
-      price: "₹2499",
-      offers: "Buy 2 Get 1 Free",
-      brand: "Brand Z",
-      rating: 3.8,
-      description: "Product 4 is a premium quality product with outstanding performance features.",
-      specs: {
-        weight: "1.3 kg",
-        dimensions: "20 x 10 x 6 cm",
-        color: "Black",
-        warranty: "3 Years",
-        deliveryTime: "3-5 days",
-        returnPolicy: "30 days return policy",
-      },
-      reviews: [
-        { user: "User 7", review: "Excellent build quality.", rating: 5 },
-        { user: "User 8", review: "Could be better.", rating: 3 },
-      ],
-    },
-    {
-      id: 5,
-      image: "https://rukminim1.flixcart.com/fk-p-flap/1600/270/image/5d51dbf60f2f8d4d.jpg?q=20",
-      title: "Product 5",
-      price: "₹2999",
-      offers: "Free shipping on orders over ₹2000",
-      brand: "Premium Brand",
-      rating: 4.0,
-      description: "Product 5 offers excellent value for money, with top-notch quality and design.",
-      specs: {
-        weight: "1.7 kg",
-        dimensions: "16 x 14 x 8 cm",
-        color: "Silver",
-        warranty: "2 Years",
-        deliveryTime: "4-6 days",
-        returnPolicy: "15 days return policy",
-      },
-      reviews: [
-        { user: "User 9", review: "Value for money!", rating: 4 },
-        { user: "User 10", review: "Good, but could use some improvement.", rating: 3 },
-      ],
-    },
-    {
-      id: 6,
-      image: "https://rukminim1.flixcart.com/fk-p-flap/1600/270/image/2e6d5e4191298924.jpg?q=20",
-      title: "Product 6",
-      price: "₹3499",
-      offers: "20% off on the second product",
-      brand: "Techno World",
-      rating: 4.7,
-      description: "Product 6 offers the latest features in technology, ensuring top-tier performance.",
-      specs: {
-        weight: "1.9 kg",
-        dimensions: "18 x 15 x 8 cm",
-        color: "Grey",
-        warranty: "3 Years",
-        deliveryTime: "3-7 days",
-        returnPolicy: "30 days return policy",
-      },
-      reviews: [
-        { user: "User 11", review: "Best in class!", rating: 5 },
-        { user: "User 12", review: "Fantastic product.", rating: 5 },
-      ],
-    },
+    // Add other products here...
   ];
-  
 
   // State to handle loading until id is available
   const [loading, setLoading] = useState(true);
@@ -193,13 +86,22 @@ const CardDetails: React.FC = () => {
   if (!card) {
     return <div>Card not found</div>;
   }
-     const handleAddToCart = () => {
-    const itemToAdd = { ...card, quantity: 1 }; // Create a new object with quantity
-    dispatch(addItem(itemToAdd)); // Dispatch addItem action with updated card data
-    toast.success(`${card.title} added to cart!`); // Notify user
-    setTimeout(() => {
-    router.push('/cart'); // Navigate to the cart page after a short delay
-  }, 2000);  };
+
+  const handleAddToCart = () => {
+    if (isAuthenticated) {
+      const itemToAdd = { ...card, quantity: 1 }; // Create a new object with quantity
+      dispatch(addItem(itemToAdd)); // Dispatch addItem action with updated card data
+      toast.success(`${card.title} added to cart!`); // Notify user
+      setTimeout(() => {
+        router.push('/cart'); // Navigate to the cart page after a short delay
+      }, 2000);
+    } else {
+      toast.error("User is not logged in.");
+      setTimeout(() => {
+        router.push('/login'); // Redirect to login if not authenticated
+      }, 2000);
+    }
+  };
 
   return (
     <div className="p-4 max-w-7xl mx-auto">
@@ -212,9 +114,12 @@ const CardDetails: React.FC = () => {
             className="w-full max-w-md h-80 object-cover rounded-lg shadow-lg"
           />
 
-          <div className="mt-4 w-full md:w-1/2 flex justify-between md:flex-row md:items-center gap-1">
+          <div className="mt-4 w-full md:w-1/2 flex justify-center md:flex-row md:items-center">
             {/* Add to Cart Button with SVG Image */}
-            <button  onClick={handleAddToCart} className="w-full md:w-40 bg-black text-white py-2 px-4 rounded-lg shadow hover:bg-blue-600 transition mb-2 md:mb-0 flex items-center justify-center space-x-2">
+            <button
+              onClick={handleAddToCart}
+              className="w-full md:w-40 bg-black text-white py-2 px-4 rounded-lg shadow hover:bg-blue-600 transition mb-2 md:mb-0 flex items-center justify-center space-x-2"
+            >
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 className="w-5 h-5"
@@ -230,23 +135,6 @@ const CardDetails: React.FC = () => {
                 <circle cx="20" cy="21" r="1" />
               </svg>
               <span>Add to Cart</span>
-            </button>
-
-            {/* Buy Now Button with SVG Image */}
-            <button className="w-full md:w-40 bg-black text-white py-2 px-4 rounded-lg shadow hover:bg-blue-600 transition mb-2 md:mb-0 flex items-center justify-center space-x-2">
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                className="w-5 h-5"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                strokeWidth="2"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-              >
-                <path d="M14 2H3a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h18a2 2 0 0 0 2-2V8l-6-6zm-1 4V4l4 4h-4z" />
-              </svg>
-              <span>Buy Now</span>
             </button>
           </div>
         </div>
