@@ -1,6 +1,7 @@
 "use client";
 import React, { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
+import { useTheme } from "../context/ThemeContext"; // assuming ThemeContext is used
 
 interface CardData {
   id: number;
@@ -9,24 +10,25 @@ interface CardData {
   price: string;
 }
 
-const Card: React.FC<{ card: CardData; onClick: (id: number) => void }> = ({
+const Card: React.FC<{ card: CardData; onClick: (id: number) => void; isDarkMode: boolean }> = ({
   card,
   onClick,
+  isDarkMode,
 }) => {
   return (
     <div
       key={card.id}
-      className="bg-gray-100 rounded-lg overflow-hidden cursor-pointer border border-gray-400"
+      className={`rounded-lg overflow-hidden cursor-pointer border ${isDarkMode ? 'border-gray-600 bg-gray-800' : 'border-gray-400 bg-gray-100'}`}
       onClick={() => onClick(card.id)}
     >
       <img
         src={card.image}
         alt={card.title}
-        className="w-full h-48 object-cover hover:scale-105"
+        className="w-full h-48 object-cover hover:scale-105 transition-all"
       />
-      <div className="p-4">
+      <div className={`p-4 ${isDarkMode ? 'text-white' : 'text-gray-800'}`}>
         <h3 className="font-semibold text-lg">{card.title}</h3>
-        <p className="text-gray-700 font-bold">{card.price}</p>
+        <p className="font-bold">{card.price}</p>
       </div>
     </div>
   );
@@ -35,6 +37,7 @@ const Card: React.FC<{ card: CardData; onClick: (id: number) => void }> = ({
 const CardGrid: React.FC = () => {
   const [isMobile, setIsMobile] = useState(false);
   const router = useRouter();
+  const { isDarkMode } = useTheme(); // Get the dark mode status
 
   const cards: CardData[] = [
     {
@@ -89,29 +92,32 @@ const CardGrid: React.FC = () => {
     return (
       <div className="grid grid-cols-2 gap-4">
         {cards.map((card) => (
-          <Card key={card.id} card={card} onClick={handleCardClick} />
+          <Card key={card.id} card={card} onClick={handleCardClick} isDarkMode={isDarkMode} />
         ))}
       </div>
     );
   };
 
   return (
-    <>
+    <div className={isDarkMode ? "bg-gray-900 text-white" : "bg-white text-black"}>
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
-        {/* Reusable CardGrid Section */}
         {Array(3)
           .fill(null)
           .map((_, index) => (
             <div className="max-w-8xl mx-auto p-2" key={index}>
-              <div className="bg-white rounded-lg shadow-lg p-4">
+              <div className={`rounded-lg shadow-lg p-4 ${isDarkMode ? 'bg-gray-800' : 'bg-white'}`}>
                 <div className="flex justify-between">
-                  <h2 className="text-xl font-semibold mb-4">
-                    Featured Products
-                  </h2>
-                  <svg width="20" height="20" fill="none" viewBox="0 0 17 17" className="bg-blue-700 rounded-full ">
+                  <h2 className="text-xl font-semibold mb-4">Featured Products</h2>
+                  <svg
+                    width="20"
+                    height="20"
+                    fill="none"
+                    viewBox="0 0 17 17"
+                    className={`bg-blue-700 rounded-full ${isDarkMode ? 'text-white' : 'text-black'}`}
+                  >
                     <path
                       d="m6.627 3.749 5 5-5 5"
-                      stroke="#FFFFFF" 
+                      stroke={isDarkMode ? '#FFFFFF' : '#000000'}
                       strokeWidth="1.2"
                       strokeLinecap="round"
                       strokeLinejoin="round"
@@ -123,7 +129,7 @@ const CardGrid: React.FC = () => {
             </div>
           ))}
       </div>
-    </>
+    </div>
   );
 };
 

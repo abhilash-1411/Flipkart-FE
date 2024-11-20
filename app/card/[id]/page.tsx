@@ -6,6 +6,7 @@ import { useDispatch } from "react-redux";
 import { addItem } from "@/lib/features/cartSlice";
 import { toast } from "react-toastify"; // Import Toastify for notifications
 import { useAuth } from "@/app/context/AuthContext";
+import { useTheme } from "@/app/context/ThemeContext"; // Assuming you have a ThemeContext for dark mode
 
 interface CardData {
   id: number;
@@ -28,7 +29,7 @@ interface CardData {
     user: string;
     review: string;
     rating: number;
-  }[];
+  }[];  
 }
 
 const CardDetails: React.FC = () => {
@@ -37,6 +38,7 @@ const CardDetails: React.FC = () => {
   const { id } = params; // Get the dynamic 'id' from the URL
   const dispatch = useDispatch();
   const { isAuthenticated } = useAuth(); // Get authentication status
+  const { isDarkMode } = useTheme(); // Use dark mode from context
 
   // Cards data with detailed information (Can be fetched from an API or local storage)
   const cards: CardData[] = [
@@ -104,7 +106,7 @@ const CardDetails: React.FC = () => {
   };
 
   return (
-    <div className="p-4 max-w-7xl mx-auto">
+    <div className={`${isDarkMode ? "bg-gray-900 text-white" : "bg-gray-100 text-black"} p-4 max-w-7xl mx-auto`}>
       <div className="flex flex-col md:flex-row items-center md:items-start">
         {/* Left Side: Product Image */}
         <div className="w-full md:w-1/2 flex flex-col justify-center items-center mb-4 md:mb-0">
@@ -118,7 +120,9 @@ const CardDetails: React.FC = () => {
             {/* Add to Cart Button with SVG Image */}
             <button
               onClick={handleAddToCart}
-              className="w-full md:w-40 bg-black text-white py-2 px-4 rounded-lg shadow hover:bg-blue-600 transition mb-2 md:mb-0 flex items-center justify-center space-x-2"
+              className={`w-full md:w-40 py-2 px-4 rounded-lg shadow transition mb-2 md:mb-0 flex items-center justify-center space-x-2 ${
+                isDarkMode ? "bg-blue-600 hover:bg-blue-500" : "bg-black text-white hover:bg-blue-600"
+              }`}
             >
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -159,7 +163,7 @@ const CardDetails: React.FC = () => {
           {/* Product Specifications */}
           <div className="mt-4">
             <h3 className="text-xl font-semibold">Specifications</h3>
-            <ul className="list-disc pl-5 mt-2 text-sm text-gray-700">
+            <ul className={`list-disc pl-5 mt-2 text-sm ${isDarkMode ? "text-gray-300" : "text-gray-700"}`}>
               <li>Brand: {card.brand}</li>
               <li>Weight: {card.specs.weight}</li>
               <li>Dimensions: {card.specs.dimensions}</li>

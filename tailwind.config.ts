@@ -13,6 +13,9 @@ const config: Config = {
         foreground: "var(--foreground)",
         colors: {
           'blue': '#2874f0',  
+          'dark-bg': '#1a202c',  // You can customize dark background color
+        'light-bg': '#ffffff',
+        
         },
       },
     },

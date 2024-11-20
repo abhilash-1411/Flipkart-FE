@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import Image from "next/image";
-
+import { useTheme } from "../context/ThemeContext";
 const categories = [
   { name: "Grocery", imageUrl: "/images/grocery.webp" },
   { name: "Mobiles", imageUrl: "/images/mobile.webp" },
@@ -65,13 +65,20 @@ const categoriesWithArrow = [
 
 export default function CategorySection() {
   const [hoveredCategory, setHoveredCategory] = useState<string | null>(null);
+  const { isDarkMode } = useTheme(); // Get dark mode state from context
+
 
   const handleMouseEnter = (categoryName: string) => {
     setHoveredCategory(categoryName);
   };
 
   return (
-    <div className="bg-white m-2 p-1 border-t border-gray-200 shadow-md">
+    <div
+    className={`m-2 p-1 border-t border-gray-200 shadow-md ${
+      isDarkMode ? "bg-gray-800 text-white" : "bg-white text-black"
+    }`}
+  >
+
       <div className="container mx-auto">
       
         <div className="flex pb-2 space-x-1 sm:space-x-3 overflow-x-auto sm:overflow-x-visible">
@@ -92,7 +99,10 @@ export default function CategorySection() {
               </div>
 
               <span
-                className="text-sm font-medium text-gray-700 flex items-center space-x-1 text-center"
+                className={`text-sm font-medium flex items-center space-x-1 text-center ${
+                  isDarkMode ? "text-white" : "text-gray-700"
+                }`}
+
                 onMouseEnter={() => handleMouseEnter(category.name)}
               >
                 <span className="">{category.name}</span> {/* Add truncate class */}
@@ -103,7 +113,10 @@ export default function CategorySection() {
                     fill="currentColor"
                     width="24"
                     height="24"
-                    className="text-black w-5 h-5"
+                    className={`w-5 h-5 ${
+                      isDarkMode ? "text-white" : "text-black"
+                    }`}
+
                   >
                     <path
                       fillRule="evenodd"

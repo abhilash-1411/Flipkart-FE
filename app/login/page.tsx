@@ -7,7 +7,7 @@ import { useRouter } from "next/navigation";
 import { useAuth } from "../context/AuthContext";
 import { toast } from "react-toastify";
 import 'react-toastify/dist/ReactToastify.css';  // Import the styles
-
+import { useTheme } from "../context/ThemeContext";
 // Initialize toast container (for global toasts)
 
 const Login: React.FC = () => {
@@ -24,7 +24,7 @@ const Login: React.FC = () => {
   const [loginError, setLoginError] = useState<string>("");
   const { login } = useAuth(); // Get login function from AuthContext
   const router = useRouter();  // For redirecting after login
-
+  const { isDarkMode, toggleDarkMode } = useTheme();
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
     setFormData((prev) => ({
@@ -101,7 +101,9 @@ const Login: React.FC = () => {
   };
 
   return (
-    <div className="flex justify-center items-center min-h-screen bg-gray-100 px-4 sm:px-8">
+    <div className={`flex justify-center items-center min-h-screen  px-4 sm:px-8${
+      isDarkMode ? "bg-gray-800 text-white" : "bg-white text-black"
+    }`}>
       <div className="flex flex-col sm:flex-row w-full max-w-5xl bg-white shadow-lg rounded-lg h-auto sm:h-[29rem]">
         {/* Left Section: Message */}
         <div className="flex flex-col justify-between p-8 bg-colors-blue text-white sm:w-1/2 rounded-t-lg sm:rounded-l-lg sm:rounded-tr-none">

@@ -1,14 +1,19 @@
 'use client';
 import React, { useState } from 'react';
 import { useAuth } from '../context/AuthContext';
-import {useRouter} from 'next/navigation';
+import { useRouter } from 'next/navigation';
 import SideBar from './SideBar';
+import { useTheme } from '../context/ThemeContext'; // Importing the useTheme hook
 
 const Navbar: React.FC = () => {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
-  const [isSidebarOpen, setIsSidebarOpen] = useState(false); // New state for sidebar toggle
+  const [isSidebarOpen, setIsSidebarOpen] = useState(false); // Sidebar toggle state
   const { isAuthenticated, logout, username } = useAuth();
-  const router=useRouter();
+  const router = useRouter();
+  
+  // For theme toggle functionality
+  const { isDarkMode, toggleDarkMode } = useTheme(); // Access dark mode state and toggle function
+
   const handleMouseEnter = () => setIsDropdownOpen(true);
   const handleMouseLeave = () => setIsDropdownOpen(false);
 
@@ -35,14 +40,15 @@ const Navbar: React.FC = () => {
   const toggleSidebar = () => {
     setIsSidebarOpen(!isSidebarOpen);
   };
+
   return (
-    <div className="w-full">
-      <header className="bg-white">
+    <div className={`w-full ${isDarkMode ? 'bg-gray-800 text-white' : 'bg-white text-black'}`}>
+      <header className={`w-full ${isDarkMode ? 'bg-gray-800 text-white' : 'bg-white text-black'}`}>
         <div className="flex items-center justify-between px-4 py-2">
           {/* Left Section (Logo) */}
           <div className="w-1/4 sm:w-[15%]">
             <a
-              className="YLCOuy px-3 py-2 rounded-md hover:text-white"
+              className={`YLCOuy px-3 py-2 rounded-md hover:${isDarkMode ? 'text-white' : 'text-black'}`}
               href="/"
               aria-label="Flipkart"
               title="Flipkart"
@@ -69,7 +75,7 @@ const Navbar: React.FC = () => {
 
           {/* Sidebar Button for Small Screens */}
           <button
-            className="md:hidden absolute right-10  px-4 py-2 bg-gray-700 text-white rounded-md"
+            className="md:hidden absolute right-10 px-4 py-2 bg-gray-700 text-white rounded-md"
             onClick={toggleSidebar}
             aria-label="Toggle Sidebar"
           >
@@ -136,7 +142,7 @@ const Navbar: React.FC = () => {
               {isAuthenticated ? (
                 <button
                   className="hover:bg-blue-600 px-3 py-2 rounded-md flex items-center gap-2 text-[19px] group"
-                  >
+                >
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
                     width="24"
@@ -150,23 +156,29 @@ const Navbar: React.FC = () => {
                       fill="currentColor"
                     />
                   </svg>
-                  <span className="text-gray-600 group-hover:text-white">{username?.split(' ')[0]}</span>
+                  <span className={`text-gray-600 group-hover:text-white ${isDarkMode ? 'text-white' : ''}`}>
+                    {username?.split(' ')[0]}
+                  </span>
                   {isDropdownOpen && (
                     <div className="absolute top-11 right-0 w-40 bg-white border border-gray-200 rounded-md shadow-lg z-10 group-hover:bg-white-600">
-                      <div className="">
-                        <a
-                          href="/profile"
-                          className="block px-4 py-2 text-sm text-gray-700  hover:bg-slate-100"
-                        >
-                          View Profile
-                        </a>
-                        <span
-                          className="block px-4 py-2 text-sm text-gray-700  hover:bg-slate-100"
-                          onClick={handleLogout}
-                        >
-                          Logout
-                        </span>
-                      </div>
+                      <a
+                        href="/profile"
+                        className="block px-4 py-2 text-sm text-gray-700  hover:bg-slate-100"
+                      >
+                        Profile
+                      </a>
+                      <a
+                        href="/orders"
+                        className="block px-4 py-2 text-sm text-gray-700  hover:bg-slate-100"
+                      >
+                        Orders
+                      </a>
+                      <button
+                        onClick={handleLogout}
+                        className="block w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-slate-100"
+                      >
+                        Logout
+                      </button>
                     </div>
                   )}
                 </button>
@@ -185,28 +197,21 @@ const Navbar: React.FC = () => {
                       fill="currentColor"
                     />
                   </svg>
-                  <span className="text-gray-600 group-hover:text-white">Login</span>
-                  <span className="flex flex-col">
-                    <div className="transition-transform transform group-hover:rotate-180 duration-300 ease-in group-hover:text-white pt-2">
-                      ^
-                    </div>
-                  </span>
+                  <span className={`text-gray-600 group-hover:text-white ${isDarkMode ? 'text-white' : ''}`}>Login</span>
                   {isDropdownOpen && (
                     <div className="absolute top-11 right-0 w-40 bg-white border border-gray-200 rounded-md shadow-lg z-10 group-hover:bg-white-600">
-                      <div className="">
-                        <a
-                          href="/login"
-                          className="block px-4 py-2 text-sm text-gray-700  hover:bg-slate-100"
-                        >
-                          Login
-                        </a>
-                        <a
-                          href="/signup"
-                          className="block px-4 py-2 text-sm text-gray-700  hover:bg-slate-100"
-                        >
-                          Sign Up
-                        </a>
-                      </div>
+                      <a
+                        href="/login"
+                        className="block px-4 py-2 text-sm text-gray-700  hover:bg-slate-100"
+                      >
+                        Login
+                      </a>
+                      <a
+                        href="/signup"
+                        className="block px-4 py-2 text-sm text-gray-700  hover:bg-slate-100"
+                      >
+                        Sign Up
+                      </a>
                     </div>
                   )}
                 </button>
@@ -228,7 +233,9 @@ const Navbar: React.FC = () => {
                   fill="currentColor"
                 />
               </svg>
-              <a className="text-gray-600 group-hover:text-white" href='/cart'>Cart</a>
+              <a className={`text-gray-600 group-hover:text-white ${isDarkMode ? 'text-white' : ''}`} href="/cart">
+                Cart
+              </a>
             </button>
 
             {/* Become a Seller */}
@@ -246,11 +253,33 @@ const Navbar: React.FC = () => {
                   fill="currentColor"
                 />
               </svg>
-              <span className="text-gray-600 group-hover:text-white whitespace-nowrap">
+              <span className={`text-gray-600 group-hover:text-white ${isDarkMode ? 'text-white' : ''}`}>
                 Become a Seller
               </span>
             </button>
           </div>
+          <svg
+            onClick={toggleDarkMode}
+            xmlns="http://www.w3.org/2000/svg"
+            width="24"
+            height="24"
+            fill="none"
+            viewBox="0 0 24 24"
+            className="w-6 h-6 cursor-pointer hover:bg-gray-700"
+            aria-label="Toggle Dark Mode"
+          >
+            {isDarkMode ? (
+              <path
+                d="M12 4a8 8 0 1 0 8 8 8 8 0 0 0-8-8z"
+                fill="currentColor"
+              />
+            ) : (
+              <path
+                d="M12 20a8 8 0 1 0-8-8 8 8 0 0 0 8 8z"
+                fill="currentColor"
+              />
+            )}
+          </svg>
         </div>
       </header>
 

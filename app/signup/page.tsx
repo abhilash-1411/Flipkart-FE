@@ -3,6 +3,7 @@ import Image from "next/image";
 import React, { useState } from "react";
 import { useRouter } from 'next/navigation'; // Import the useRouter hook to redirect
 import { toast } from "react-toastify";
+import { useTheme } from "../context/ThemeContext";
 const Signup: React.FC = () => {
   const [formData, setFormData] = useState({
     name: "",
@@ -19,7 +20,7 @@ const Signup: React.FC = () => {
   const [isSubmitting, setIsSubmitting] = useState(false); // To handle the submitting state
   const [errorMessage, setErrorMessage] = useState(""); // For API error messages
   const [passwordStrength, setPasswordStrength] = useState<string>("");
-
+  const { isDarkMode, toggleDarkMode } = useTheme();
   const router = useRouter(); 
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -122,7 +123,9 @@ const Signup: React.FC = () => {
 
   return (
     <div>
-      <div className="flex justify-center items-center min-h-screen bg-gray-100">
+      <div className={`flex justify-center items-center min-h-screen  ${
+      isDarkMode ? "bg-gray-800 text-white" : "bg-white text-black"
+    }`}>
         <div className="flex w-full max-w-5xl bg-white shadow-lg rounded-lg">
           {/* Left Section: Message */}
           <div className="flex flex-col justify-around p-8 bg-blue-500 text-white">

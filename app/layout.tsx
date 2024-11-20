@@ -7,6 +7,7 @@ import { AuthProvider } from "./context/AuthContext";
 import StoreProvider from "./StoreProvider";
 import { ToastContainer } from 'react-toastify'; // Import ToastContainer
 import 'react-toastify/dist/ReactToastify.css'; // Import the CSS for styling
+import { ThemeProvider } from "./context/ThemeContext";
 
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",
@@ -34,6 +35,7 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
+         <ThemeProvider> 
         <AuthProvider>
           <Navbar />
           <StoreProvider>
@@ -53,6 +55,7 @@ export default function RootLayout({
           draggable // Allow dragging
           pauseOnHover // Pause on hover
         />
+          </ThemeProvider>
       </body>
     </html>
   );

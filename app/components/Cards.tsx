@@ -3,6 +3,7 @@ import React, { useState, useEffect } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faChevronRight } from "@fortawesome/free-solid-svg-icons";
 import { useRouter } from "next/navigation"; 
+import { useTheme } from "../context/ThemeContext";
 
 interface CardData {
   id: number;
@@ -16,7 +17,7 @@ const Cards: React.FC = () => {
   const [itemsPerSlide, setItemsPerSlide] = useState(4);
   const [isMobile, setIsMobile] = useState(false);
   const router = useRouter();  
-
+  const { isDarkMode } = useTheme();  // Retrieve dark mode state
   const cards: CardData[] = [
     {
       id: 1,
@@ -48,12 +49,6 @@ const Cards: React.FC = () => {
       title: "Product 5",
       price: "₹2999",
     },
-    // {
-    //   id: 6,
-    //   image: "https://rukminim1.flixcart.com/fk-p-flap/1600/270/image/2e6d5e4191298924.jpg?q=20",
-    //   title: "Product 6",
-    //   price: "₹3499",
-    // },
   ];
 
   useEffect(() => {
@@ -98,9 +93,9 @@ const Cards: React.FC = () => {
   };
 
   return (
-    <div className="relative w-full mx-auto">
+    <div className={`relative w-full mx-auto ${isDarkMode ? 'bg-gray-800' : 'bg-white'}`}>
       <div className="relative w-full overflow-hidden">
-        <div className="h-12 p-4 text-xl font-semibold">
+        <div className={`h-12 p-4 text-xl font-semibold ${isDarkMode ? 'bg-gray-800 text-white' : 'bg-white text-black'}`}>
           Best Deals on Smartphones
         </div>
         {isMobile ? (
@@ -108,7 +103,9 @@ const Cards: React.FC = () => {
             {cards.map((card) => (
               <div
                 key={card.id}
-                className="w-full sm:w-[20rem] md:w-[22rem] lg:w-[24rem] mx-auto flex flex-row items-center cursor-pointer"
+                className={`w-full sm:w-[20rem] md:w-[22rem] lg:w-[24rem] mx-auto flex flex-row items-center cursor-pointer 
+                  ${isDarkMode ? 'bg-gray-700 text-white' : 'bg-white text-black'} 
+                  rounded-lg shadow-lg`}
                 onClick={() => handleCardClick(card.id)} 
               >
                 <div className="w-[20%]">
@@ -121,10 +118,10 @@ const Cards: React.FC = () => {
 
                 <div className="w-[50%] flex flex-col justify-center pl-2">
                   <h3 className="text-lg font-semibold">{card.title}</h3>
-                  <p className="text-xl font-bold text-gray-800">{card.price}</p>
+                  <p className={`text-xl font-bold ${isDarkMode ? 'text-white' : 'text-gray-800'}`}>{card.price}</p>
                 </div>
                 <div className="ml-auto">
-                  <FontAwesomeIcon icon={faChevronRight} className="text-md" />
+                  <FontAwesomeIcon icon={faChevronRight} className={`text-md ${isDarkMode ? 'text-white' : 'text-black'}`} />
                 </div>
               </div>
             ))}
@@ -141,20 +138,20 @@ const Cards: React.FC = () => {
             {cards.map((card) => (
               <div
                 key={card.id}
-                className="w-[90%] sm:w-[20rem] md:w-[22rem] lg:w-[24rem] flex-shrink-0 px-4 p-4 cursor-pointer"
+                className={`w-[90%] sm:w-[20rem] md:w-[22rem] lg:w-[24rem] flex-shrink-0 px-4 p-4 cursor-pointer 
+                  ${isDarkMode ? 'bg-gray-700' : 'bg-white'} 
+                  rounded-lg shadow-lg`}
                 onClick={() => handleCardClick(card.id)} 
               >
-                <div className="bg-white rounded-lg shadow-lg overflow-hidden">
-                  <img
-                    src={card.image}
-                    alt={`Product ${card.id}`}
-                    className="w-full h-56 object-cover"
-                    style={{ aspectRatio: "211/35" }}
-                  />
-                  <div className="p-4">
-                    <h3 className="text-lg font-semibold">{card.title}</h3>
-                    <p className="text-xl font-bold text-gray-800">{card.price}</p>
-                  </div>
+                <img
+                  src={card.image}
+                  alt={`Product ${card.id}`}
+                  className="w-full h-56 object-cover"
+                  style={{ aspectRatio: "211/35" }}
+                />
+                <div className={`p-4 ${isDarkMode ? 'text-white' : 'text-black'}`}>
+                  <h3 className="text-lg font-semibold">{card.title}</h3>
+                  <p className={`text-xl font-bold ${isDarkMode ? 'text-white' : 'text-gray-800'}`}>{card.price}</p>
                 </div>
               </div>
             ))}
@@ -169,9 +166,8 @@ const Cards: React.FC = () => {
               <button
                 key={index}
                 onClick={() => handleDotClick(index)}
-                className={`w-3 h-3 rounded-full bg-white ${
-                  currentSlide === index ? "bg-blue-500" : "bg-opacity-50"
-                }`}
+                className={`w-3 h-3 rounded-full ${isDarkMode ? 'bg-gray-600' : 'bg-white'} 
+                  ${currentSlide === index ? 'bg-blue-500' : 'bg-opacity-50'}`}
               ></button>
             )
           )}
@@ -180,7 +176,8 @@ const Cards: React.FC = () => {
       {!isMobile && (
         <button
           onClick={prevSlide}
-          className="absolute top-1/2 left-0 transform -translate-y-1/2 bg-white p-5 rounded-full shadow-lg"
+          className={`absolute top-1/2 left-0 transform -translate-y-1/2 p-5 rounded-full shadow-lg 
+            ${isDarkMode ? 'bg-gray-600 text-white' : 'bg-white text-black'}`}
           disabled={currentSlide === 0}
         >
           &lt;
@@ -189,7 +186,8 @@ const Cards: React.FC = () => {
       {!isMobile && (
         <button
           onClick={nextSlide}
-          className="absolute top-1/2 right-0 transform -translate-y-1/2 bg-white p-5 rounded-full shadow-lg"
+          className={`absolute top-1/2 right-0 transform -translate-y-1/2 p-5 rounded-full shadow-lg 
+            ${isDarkMode ? 'bg-gray-600 text-white' : 'bg-white text-black'}`}
           disabled={currentSlide === Math.floor(cards.length / itemsPerSlide)}
         >
           &gt;

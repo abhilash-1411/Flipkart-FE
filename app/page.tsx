@@ -1,19 +1,25 @@
-import React from 'react'
+'use client';
+import React from 'react';
 import BannerNavigation from "./BannerNavigation/page";
-import Carousel from './components/Carousel'
+import Carousel from './components/Carousel';
 import Cards from './components/Cards';
-import GridCard from './components/GridCard'
-const page = () => {
+import GridCard from './components/GridCard';
+import { useTheme } from './context/ThemeContext';
+
+
+const Page = () => {
+  const { isDarkMode } = useTheme();  // Get dark mode state
+
   return (
-    <div>
-      <main className=''>
-      <BannerNavigation/>
-      <Carousel/>
-      <Cards/> 
-      <GridCard/>
+    <div className={isDarkMode ? 'dark' : ''}> {/* Apply dark class globally */}
+      <main>
+        <BannerNavigation />
+        <Carousel />
+        <Cards />
+        <GridCard />
       </main>
     </div>
-  )
-}
+  );
+};
 
-export default page
+export default Page;
