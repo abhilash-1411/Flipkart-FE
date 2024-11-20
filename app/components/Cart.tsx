@@ -59,9 +59,9 @@ const Cart: React.FC = () => {
                   <div className="ml-4">
                     <h3 className="text-lg font-semibold">{item.title}</h3>
                     <p className="text-gray-600">Price: <span className="font-bold">{item.price}</span></p>
-                    <p className="text-gray-600">Quantity:
+                    <span className="text-gray-600">Quantity:
                       <span className="font-bold">{item.quantity}</span>
-                      <div className="flex items-center mt-2">
+                      <span className="flex items-center mt-2">
                         <button
                           onClick={() => handleIncreaseQuantity(item.id)}
                           className="bg-gray-200 text-gray-700 py-1 px-3 rounded hover:bg-gray-300 transition mr-2"
@@ -74,8 +74,8 @@ const Cart: React.FC = () => {
                         >
                           -
                         </button>
-                      </div>
-                    </p>
+                      </span>
+                    </span>
                     <p className="text-sm text-gray-500">{item.offers}</p>
                   </div>
                 </div>

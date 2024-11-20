@@ -1,20 +1,20 @@
 'use client';
 import React, { useState } from 'react';
 import { useAuth } from '../context/AuthContext';
-import Router from 'next/router';
+import {useRouter} from 'next/navigation';
 import SideBar from './SideBar';
 
 const Navbar: React.FC = () => {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const [isSidebarOpen, setIsSidebarOpen] = useState(false); // New state for sidebar toggle
   const { isAuthenticated, logout, username } = useAuth();
-
+  const router=useRouter();
   const handleMouseEnter = () => setIsDropdownOpen(true);
   const handleMouseLeave = () => setIsDropdownOpen(false);
 
   const handleLogout = async () => {
     try {
-      const response = await fetch('https://9d8p7tn1-3000.inc1.devtunnels.ms/auth/logout', {
+      const response = await fetch('https://xh2vgz5c-3001.inc1.devtunnels.ms/auth/logout', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -23,7 +23,7 @@ const Navbar: React.FC = () => {
 
       if (response.ok) {
         logout();
-        Router.push('/login');
+        router.push('/login');
       } else {
         console.error('Logout failed: ', response.statusText);
       }
@@ -35,7 +35,6 @@ const Navbar: React.FC = () => {
   const toggleSidebar = () => {
     setIsSidebarOpen(!isSidebarOpen);
   };
-
   return (
     <div className="w-full">
       <header className="bg-white">
@@ -137,8 +136,7 @@ const Navbar: React.FC = () => {
               {isAuthenticated ? (
                 <button
                   className="hover:bg-blue-600 px-3 py-2 rounded-md flex items-center gap-2 text-[19px] group"
-                  onClick={handleLogout}
-                >
+                  >
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
                     width="24"
@@ -162,12 +160,12 @@ const Navbar: React.FC = () => {
                         >
                           View Profile
                         </a>
-                        <a
-                          href="/"
+                        <span
                           className="block px-4 py-2 text-sm text-gray-700  hover:bg-slate-100"
+                          onClick={handleLogout}
                         >
                           Logout
-                        </a>
+                        </span>
                       </div>
                     </div>
                   )}
