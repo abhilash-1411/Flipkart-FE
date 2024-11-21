@@ -2,6 +2,7 @@
 import React, { useState, useEffect } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faChevronRight } from "@fortawesome/free-solid-svg-icons";
+import { useTheme } from "../context/ThemeContext";
 interface CardData {
   image: string;
   title: string;
@@ -12,6 +13,8 @@ const Cards: React.FC = () => {
   const [currentSlide, setCurrentSlide] = useState(0);
   const [itemsPerSlide, setItemsPerSlide] = useState(4);
   const [isMobile, setIsMobile] = useState(false);
+  const { isDarkMode } = useTheme(); // Get dark mode state from context
+
   const cards: CardData[] = [
     {
       image:
@@ -91,11 +94,13 @@ const Cards: React.FC = () => {
   return (
     <div className="relative w-full mx-auto">
       <div className="relative w-full overflow-hidden">
-        <div className="h-12 p-4 text-xl font-semibold">
+        <div className={`h-12 p-4 text-xl font-semibold${
+      isDarkMode ? "bg-gray-800 text-white" : "bg-white text-blue-700"
+    }`}>
           Best Deals on Smartphones
         </div>
         {isMobile ? (
-          <div className="flex flex-col sm:flex-row space-y-4 sm:space-y-0 sm:space-x-4 p-4">
+          <div className="flex flex-col sm:flex-row space-y-4 sm:space-y-0 sm:space-x-4 p-4 ">
             {cards.map((card, index) => (
               <div
                 key={index}

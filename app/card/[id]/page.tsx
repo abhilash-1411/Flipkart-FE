@@ -42,30 +42,273 @@ const CardDetails: React.FC = () => {
 
   // Cards data with detailed information (Can be fetched from an API or local storage)
   const cards: CardData[] = [
+
     {
+
       id: 1,
+
       image: "https://rukminim2.flixcart.com/fk-p-flap/1570/260/image/4d1606268e015845.jpg?q=80",
+
       title: "Product 1",
+
       price: "₹999",
+
       offers: "10% off on first purchase",
+
       brand: "Example Brand",
+
       rating: 4.2,
+
       description: "This is a description of Product 1. It is a great product with excellent features.",
+
       specs: {
+
         weight: "1.5 kg",
+
         dimensions: "15 x 10 x 5 cm",
+
         color: "Black",
+
         warranty: "2 Years",
+
         deliveryTime: "3-5 days",
+
         returnPolicy: "30 days return policy",
+
       },
+
       reviews: [
+
         { user: "User 1", review: "Great product!", rating: 5 },
+
         { user: "User 2", review: "Worth the price.", rating: 4 },
+
       ],
+
     },
-    // Add other products here...
+
+    {
+
+      id: 2,
+
+      image: "https://rukminim1.flixcart.com/fk-p-flap/1600/270/image/8acfb721c7bef89a.jpg?q=20",
+
+      title: "Product 2",
+
+      price: "₹1499",
+
+      offers: "Buy 1 Get 1 free",
+
+      brand: "Brand X",
+
+      rating: 3.9,
+
+      description: "Product 2 is a high-quality product with special offers.",
+
+      specs: {
+
+        weight: "1.2 kg",
+
+        dimensions: "12 x 8 x 4 cm",
+
+        color: "Red",
+
+        warranty: "1 Year",
+
+        deliveryTime: "5-7 days",
+
+        returnPolicy: "15 days return policy",
+
+      },
+
+      reviews: [
+
+        { user: "User 3", review: "Good quality.", rating: 4 },
+
+        { user: "User 4", review: "Value for money.", rating: 4 },
+
+      ],
+
+    },
+
+    {
+
+      id: 3,
+
+      image: "https://rukminim1.flixcart.com/fk-p-flap/1600/270/image/f991d1be51d2f0c2.jpg?q=20",
+
+      title: "Product 3",
+
+      price: "₹1999",
+
+      offers: "Flat 15% off on orders above ₹1500",
+
+      brand: "Brand Y",
+
+      rating: 4.5,
+
+      description: "Product 3 offers excellent value and performance, perfect for your daily needs.",
+
+      specs: {
+
+        weight: "1.0 kg",
+
+        dimensions: "18 x 12 x 7 cm",
+
+        color: "Blue",
+
+        warranty: "1 Year",
+
+        deliveryTime: "2-4 days",
+
+        returnPolicy: "10 days return policy",
+
+      },
+
+      reviews: [
+
+        { user: "User 5", review: "Amazing product!", rating: 5 },
+
+        { user: "User 6", review: "Satisfactory performance.", rating: 4 },
+
+      ],
+
+    },
+
+    {
+
+      id: 4,
+
+      image: "https://rukminim1.flixcart.com/fk-p-flap/1600/270/image/2e6d5e4191298924.jpg?q=20",
+
+      title: "Product 4",
+
+      price: "₹2499",
+
+      offers: "Buy 2 Get 1 Free",
+
+      brand: "Brand Z",
+
+      rating: 3.8,
+
+      description: "Product 4 is a premium quality product with outstanding performance features.",
+
+      specs: {
+
+        weight: "1.3 kg",
+
+        dimensions: "20 x 10 x 6 cm",
+
+        color: "Black",
+
+        warranty: "3 Years",
+
+        deliveryTime: "3-5 days",
+
+        returnPolicy: "30 days return policy",
+
+      },
+
+      reviews: [
+
+        { user: "User 7", review: "Excellent build quality.", rating: 5 },
+
+        { user: "User 8", review: "Could be better.", rating: 3 },
+
+      ],
+
+    },
+
+    {
+
+      id: 5,
+
+      image: "https://rukminim1.flixcart.com/fk-p-flap/1600/270/image/5d51dbf60f2f8d4d.jpg?q=20",
+
+      title: "Product 5",
+
+      price: "₹2999",
+
+      offers: "Free shipping on orders over ₹2000",
+
+      brand: "Premium Brand",
+
+      rating: 4.0,
+
+      description: "Product 5 offers excellent value for money, with top-notch quality and design.",
+
+      specs: {
+
+        weight: "1.7 kg",
+
+        dimensions: "16 x 14 x 8 cm",
+
+        color: "Silver",
+
+        warranty: "2 Years",
+
+        deliveryTime: "4-6 days",
+
+        returnPolicy: "15 days return policy",
+
+      },
+
+      reviews: [
+
+        { user: "User 9", review: "Value for money!", rating: 4 },
+
+        { user: "User 10", review: "Good, but could use some improvement.", rating: 3 },
+
+      ],
+
+    },
+
+    {
+
+      id: 6,
+
+      image: "https://rukminim1.flixcart.com/fk-p-flap/1600/270/image/2e6d5e4191298924.jpg?q=20",
+
+      title: "Product 6",
+
+      price: "₹3499",
+
+      offers: "20% off on the second product",
+
+      brand: "Techno World",
+
+      rating: 4.7,
+
+      description: "Product 6 offers the latest features in technology, ensuring top-tier performance.",
+
+      specs: {
+
+        weight: "1.9 kg",
+
+        dimensions: "18 x 15 x 8 cm",
+
+        color: "Grey",
+
+        warranty: "3 Years",
+
+        deliveryTime: "3-7 days",
+
+        returnPolicy: "30 days return policy",
+
+      },
+
+      reviews: [
+
+        { user: "User 11", review: "Best in class!", rating: 5 },
+
+        { user: "User 12", review: "Fantastic product.", rating: 5 },
+
+      ],
+
+    },
+
   ];
+ 
 
   // State to handle loading until id is available
   const [loading, setLoading] = useState(true);
@@ -94,9 +337,9 @@ const CardDetails: React.FC = () => {
       const itemToAdd = { ...card, quantity: 1 }; // Create a new object with quantity
       dispatch(addItem(itemToAdd)); // Dispatch addItem action with updated card data
       toast.success(`${card.title} added to cart!`); // Notify user
-      setTimeout(() => {
-        router.push('/cart'); // Navigate to the cart page after a short delay
-      }, 2000);
+      // setTimeout(() => {
+      //   router.push('/cart'); // Navigate to the cart page after a short delay
+      // }, 2000);
     } else {
       toast.error("User is not logged in.");
       setTimeout(() => {
