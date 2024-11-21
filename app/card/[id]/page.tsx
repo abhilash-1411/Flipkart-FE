@@ -335,9 +335,9 @@ const CardDetails: React.FC = () => {
       const itemToAdd = { ...card, quantity: 1 }; // Create a new object with quantity
       dispatch(addItem(itemToAdd)); // Dispatch addItem action with updated card data
       toast.success(`${card.title} added to cart!`); // Notify user
-      setTimeout(() => {
-        router.push('/cart'); // Navigate to the cart page after a short delay
-      }, 2000);
+      // setTimeout(() => {
+      //   router.push('/cart'); // Navigate to the cart page after a short delay
+      // }, 2000);
     } else {
       toast.error("User is not logged in.");
       setTimeout(() => {
