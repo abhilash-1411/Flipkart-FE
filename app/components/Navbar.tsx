@@ -1,16 +1,17 @@
-'use client';
-import React, { useState } from 'react';
-import { useAuth } from '../context/AuthContext';
-import { useRouter } from 'next/navigation';
-import SideBar from './SideBar';
-import { useTheme } from '../context/ThemeContext'; // Importing the useTheme hook
+"use client";
+import React, { useState } from "react";
+import { useAuth } from "../context/AuthContext";
+import { useRouter } from "next/navigation";
+import SideBar from "./SideBar";
+import { useTheme } from "../context/ThemeContext"; // Importing the useTheme hook
+import Image from "next/image";
 
 const Navbar: React.FC = () => {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const [isSidebarOpen, setIsSidebarOpen] = useState(false); // Sidebar toggle state
   const { isAuthenticated, logout, username } = useAuth();
   const router = useRouter();
-  
+
   // For theme toggle functionality
   const { isDarkMode, toggleDarkMode } = useTheme(); // Access dark mode state and toggle function
 
@@ -19,21 +20,24 @@ const Navbar: React.FC = () => {
 
   const handleLogout = async () => {
     try {
-      const response = await fetch('https://xh2vgz5c-3001.inc1.devtunnels.ms/auth/logout', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-      });
+      const response = await fetch(
+        "https://xh2vgz5c-3001.inc1.devtunnels.ms/auth/logout",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
 
       if (response.ok) {
         logout();
-        router.push('/login');
+        router.push("/login");
       } else {
-        console.error('Logout failed: ', response.statusText);
+        console.error("Logout failed: ", response.statusText);
       }
     } catch (error) {
-      console.error('Network error during logout: ', error);
+      console.error("Network error during logout: ", error);
     }
   };
 
@@ -42,13 +46,23 @@ const Navbar: React.FC = () => {
   };
 
   return (
-    <div className={`w-full ${isDarkMode ? 'bg-gray-800 text-white' : 'bg-white text-black'}`}>
-      <header className={`w-full ${isDarkMode ? 'bg-gray-800 text-white' : 'bg-white text-black'}`}>
+    <div
+      className={`w-full ${
+        isDarkMode ? "bg-gray-800 text-white" : "bg-white text-black"
+      }`}
+    >
+      <header
+        className={`w-full ${
+          isDarkMode ? "bg-gray-800 text-white" : "bg-white text-black"
+        }`}
+      >
         <div className="flex items-center justify-between px-4 py-2">
           {/* Left Section (Logo) */}
           <div className="w-1/4 sm:w-[15%]">
             <a
-              className={`YLCOuy px-3 py-2 rounded-md hover:${isDarkMode ? 'text-white' : 'text-black'}`}
+              className={`YLCOuy px-3 py-2 rounded-md hover:${
+                isDarkMode ? "text-white" : "text-black"
+              }`}
               href="/"
               aria-label="Flipkart"
               title="Flipkart"
@@ -79,7 +93,7 @@ const Navbar: React.FC = () => {
             onClick={toggleSidebar}
             aria-label="Toggle Sidebar"
           >
-            {isSidebarOpen ? 'Close Sidebar' : 'Open Sidebar'}
+            {isSidebarOpen ? "Close Sidebar" : "Open Sidebar"}
           </button>
 
           {/* Center Section (Search bar) */}
@@ -95,12 +109,7 @@ const Navbar: React.FC = () => {
                 aria-label="Search for Products, Brands and More"
                 title="Search for Products, Brands and More"
               >
-                <svg
-                  width="24"
-                  height="24"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                >
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
                   <title>Search Icon</title>
                   <path
                     d="M10.5 18C14.6421 18 18 14.6421 18 10.5C18 6.35786 14.6421 3 10.5 3C6.35786 3 3 6.35786 3 10.5C3 14.6421 6.35786 18 10.5 18Z"
@@ -140,9 +149,7 @@ const Navbar: React.FC = () => {
               onMouseLeave={handleMouseLeave}
             >
               {isAuthenticated ? (
-                <button
-                  className="hover:bg-blue-600 px-3 py-2 rounded-md flex items-center gap-2 text-[19px] group"
-                >
+                <button className="hover:bg-blue-600 px-3 py-2 rounded-md flex items-center gap-2 text-[19px] group">
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
                     width="24"
@@ -156,8 +163,12 @@ const Navbar: React.FC = () => {
                       fill="currentColor"
                     />
                   </svg>
-                  <span className={`text-gray-600 group-hover:text-white ${isDarkMode ? 'text-white' : ''}`}>
-                    {username?.split(' ')[0]}
+                  <span
+                    className={`text-gray-600 group-hover:text-white ${
+                      isDarkMode ? "text-white" : ""
+                    }`}
+                  >
+                    {username?.split(" ")[0]}
                   </span>
                   {isDropdownOpen && (
                     <div className="absolute top-11 right-0 w-40 bg-white border border-gray-200 rounded-md shadow-lg z-10 group-hover:bg-white-600">
@@ -197,7 +208,13 @@ const Navbar: React.FC = () => {
                       fill="currentColor"
                     />
                   </svg>
-                  <span className={`text-gray-600 group-hover:text-white ${isDarkMode ? 'text-white' : ''}`}>Login</span>
+                  <span
+                    className={`text-gray-600 group-hover:text-white ${
+                      isDarkMode ? "text-white" : ""
+                    }`}
+                  >
+                    Login
+                  </span>
                   {isDropdownOpen && (
                     <div className="absolute top-11 right-0 w-40 bg-white border border-gray-200 rounded-md shadow-lg z-10 group-hover:bg-white-600">
                       <a
@@ -233,7 +250,12 @@ const Navbar: React.FC = () => {
                   fill="currentColor"
                 />
               </svg>
-              <a className={`text-gray-600 group-hover:text-white ${isDarkMode ? 'text-white' : ''}`} href="/cart">
+              <a
+                className={`text-gray-600 group-hover:text-white ${
+                  isDarkMode ? "text-white" : ""
+                }`}
+                href="/cart"
+              >
                 Cart
               </a>
             </button>
@@ -253,12 +275,16 @@ const Navbar: React.FC = () => {
                   fill="currentColor"
                 />
               </svg>
-              <span className={`text-gray-600 group-hover:text-white ${isDarkMode ? 'text-white' : ''}`}>
+              <span
+                className={`text-gray-600 group-hover:text-white ${
+                  isDarkMode ? "text-white" : ""
+                }`}
+              >
                 Become a Seller
               </span>
             </button>
           </div>
-          <svg
+          {/* <svg
             onClick={toggleDarkMode}
             xmlns="http://www.w3.org/2000/svg"
             width="24"
@@ -279,7 +305,16 @@ const Navbar: React.FC = () => {
                 fill="currentColor"
               />
             )}
-          </svg>
+          </svg> */}
+
+          <Image
+            src={isDarkMode ? "/images/lightmode2.png" : "/images/darkmode.png"}
+            alt={isDarkMode ? "Switch to Light Mode" : "Switch to Dark Mode"}
+            width={24}
+            height={24}
+            onClick={toggleDarkMode}
+            className="cursor-pointer"
+          />
         </div>
       </header>
 
