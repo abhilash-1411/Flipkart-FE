@@ -214,6 +214,8 @@ const Navbar: React.FC = () => {
             </div>
 
             {/* Cart Button */}
+            {
+              (isAuthenticated)&&
             <button className="hover:bg-blue-600 px-3 py-2 rounded-md flex items-center gap-2 text-[19px] group">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -230,6 +232,7 @@ const Navbar: React.FC = () => {
               </svg>
               <a className="text-gray-600 group-hover:text-white" href='/cart'>Cart</a>
             </button>
+            }
 
             {/* Become a Seller */}
             <button className="px-3 py-2 rounded-md flex items-center gap-2 hover:bg-blue-600 text-[19px] group">

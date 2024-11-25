@@ -43,8 +43,8 @@ export default function RootLayout({
         </AuthProvider>
         {/* Add ToastContainer here */}
         <ToastContainer 
-          position="top-right" // You can change the position as needed
-          autoClose={5000} // Duration in milliseconds for auto close
+          position="top-right" 
+          autoClose={3000} 
           hideProgressBar={false} // Show progress bar
           newestOnTop={false} // Newest toast on top
           closeOnClick // Close on click
