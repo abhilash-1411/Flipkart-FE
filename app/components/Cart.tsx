@@ -3,7 +3,7 @@ import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { removeItem, clearCart, increaseQuantity, decreaseQuantity } from '@/lib/features/cartSlice';
 import { toast } from 'react-toastify';
-
+import Link from 'next/link';
 // Define the CartItem interface
 interface CartItem {
   id: number;
@@ -48,6 +48,7 @@ const Cart: React.FC = () => {
       {cartItems.length === 0 ? (
         <div className="text-center">
           <p className="text-lg">Your cart is empty.</p>
+          
         </div>
       ) : (
         <div>

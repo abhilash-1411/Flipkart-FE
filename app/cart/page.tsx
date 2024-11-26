@@ -3,6 +3,8 @@ import React from 'react';
 import Cart from '../components/Cart';
 import { useRouter } from 'next/navigation'; // For navigation
 import { useAuth } from '../context/AuthContext';
+import Link from 'next/link';
+
 const CartPage: React.FC = () => {
   const router = useRouter();
   const {isAuthenticated}=useAuth()
@@ -12,6 +14,7 @@ const CartPage: React.FC = () => {
 
   return (
     <div className="relative">
+      
       <Cart />
       {/* Button container */}
       {
@@ -26,6 +29,9 @@ const CartPage: React.FC = () => {
         </button>
       </div>
       }
+      <Link href="/">
+          <button className='mt-6 p-3 bg-blue-600 text-white hover:bg-blue-900 rounded-md font-semibold'>Go To Home</button>
+          </Link>
     </div>
   );
 };
