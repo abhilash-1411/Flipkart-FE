@@ -1,11 +1,16 @@
 'use client';
-import React from 'react';
+import React, { useState } from 'react';
 import DeliveryAddressCard from './DeliveryAddress';
 import DeliverySummaryCard from './DeliverySummary';
 import TotalDetails from './TotalDetails';
 import PaymentOptions from './PaymentOptions';
 
 const Page = () => {
+  const [isFormFilled, setIsFormFilled] = useState(false);
+
+  const handleFormFilled = (filled: boolean) => {
+      setIsFormFilled(filled); // Update state based on form validity
+  };
   return (
     <div className="w-full relative">
       <div className="w-full sm:flex">
