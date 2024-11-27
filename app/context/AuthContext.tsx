@@ -13,6 +13,8 @@ interface AuthContextType {
   toggleSidebar: () => void;
   username: string | null;
   token: string | null;
+  formSubmissionStatus: boolean; // Add form submission status here
+  setFormSubmissionStatus: (status: boolean) => void; // Function to update form submission status
 }
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
@@ -23,6 +25,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
   const [username, setUsername] = useState<string | null>(null);
   const [token, setToken] = useState<string | null>(null);
   const [isMounted, setIsMounted] = useState<boolean>(false);  // To prevent accessing localStorage during SSR
+  const [formSubmissionStatus, setFormSubmissionStatus] = useState<boolean>(false);  // Add form submission state
 
   // This effect ensures we check for the JWT token in localStorage only on the client side
   useEffect(() => {
@@ -62,7 +65,19 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
   if (!isMounted) return null;
 
   return (
-    <AuthContext.Provider value={{ isAuthenticated, login, logout, isSidebarOpen, toggleSidebar, username, token }}>
+    <AuthContext.Provider
+      value={{
+        isAuthenticated,
+        login,
+        logout,
+        isSidebarOpen,
+        toggleSidebar,
+        username,
+        token,
+        formSubmissionStatus,  // Expose form submission status
+        setFormSubmissionStatus,  // Expose function to update it
+      }}
+    >
       {children}
     </AuthContext.Provider>
   );

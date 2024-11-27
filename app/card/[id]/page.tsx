@@ -7,6 +7,7 @@ import { addItem } from "@/lib/features/cartSlice";
 import { toast } from "react-toastify"; // Import Toastify for notifications
 import { useAuth } from "@/app/context/AuthContext";
 import { useTheme } from "@/app/context/ThemeContext"; // Assuming you have a ThemeContext for dark mode
+import Link from "next/link";
 
 interface CardData {
   id: number;
@@ -47,7 +48,8 @@ const CardDetails: React.FC = () => {
 
       id: 1,
 
-      image: "https://rukminim2.flixcart.com/fk-p-flap/1570/260/image/4d1606268e015845.jpg?q=80",
+      image:
+        "https://rukminim2.flixcart.com/fk-p-flap/1570/260/image/4d1606268e015845.jpg?q=80",
 
       title: "Product 1",
 
@@ -59,7 +61,8 @@ const CardDetails: React.FC = () => {
 
       rating: 4.2,
 
-      description: "This is a description of Product 1. It is a great product with excellent features.",
+      description:
+        "This is a description of Product 1. It is a great product with excellent features.",
 
       specs: {
 
@@ -88,10 +91,10 @@ const CardDetails: React.FC = () => {
     },
 
     {
-
       id: 2,
 
-      image: "https://rukminim1.flixcart.com/fk-p-flap/1600/270/image/8acfb721c7bef89a.jpg?q=20",
+      image:
+        "https://rukminim1.flixcart.com/fk-p-flap/1600/270/image/8acfb721c7bef89a.jpg?q=20",
 
       title: "Product 2",
 
@@ -106,7 +109,6 @@ const CardDetails: React.FC = () => {
       description: "Product 2 is a high-quality product with special offers.",
 
       specs: {
-
         weight: "1.2 kg",
 
         dimensions: "12 x 8 x 4 cm",
@@ -118,24 +120,20 @@ const CardDetails: React.FC = () => {
         deliveryTime: "5-7 days",
 
         returnPolicy: "15 days return policy",
-
       },
 
       reviews: [
-
         { user: "User 3", review: "Good quality.", rating: 4 },
 
         { user: "User 4", review: "Value for money.", rating: 4 },
-
       ],
-
     },
 
     {
-
       id: 3,
 
-      image: "https://rukminim1.flixcart.com/fk-p-flap/1600/270/image/f991d1be51d2f0c2.jpg?q=20",
+      image:
+        "https://rukminim1.flixcart.com/fk-p-flap/1600/270/image/f991d1be51d2f0c2.jpg?q=20",
 
       title: "Product 3",
 
@@ -147,10 +145,10 @@ const CardDetails: React.FC = () => {
 
       rating: 4.5,
 
-      description: "Product 3 offers excellent value and performance, perfect for your daily needs.",
+      description:
+        "Product 3 offers excellent value and performance, perfect for your daily needs.",
 
       specs: {
-
         weight: "1.0 kg",
 
         dimensions: "18 x 12 x 7 cm",
@@ -162,24 +160,20 @@ const CardDetails: React.FC = () => {
         deliveryTime: "2-4 days",
 
         returnPolicy: "10 days return policy",
-
       },
 
       reviews: [
-
         { user: "User 5", review: "Amazing product!", rating: 5 },
 
         { user: "User 6", review: "Satisfactory performance.", rating: 4 },
-
       ],
-
     },
 
     {
-
       id: 4,
 
-      image: "https://rukminim1.flixcart.com/fk-p-flap/1600/270/image/2e6d5e4191298924.jpg?q=20",
+      image:
+        "https://rukminim1.flixcart.com/fk-p-flap/1600/270/image/2e6d5e4191298924.jpg?q=20",
 
       title: "Product 4",
 
@@ -191,10 +185,10 @@ const CardDetails: React.FC = () => {
 
       rating: 3.8,
 
-      description: "Product 4 is a premium quality product with outstanding performance features.",
+      description:
+        "Product 4 is a premium quality product with outstanding performance features.",
 
       specs: {
-
         weight: "1.3 kg",
 
         dimensions: "20 x 10 x 6 cm",
@@ -206,24 +200,20 @@ const CardDetails: React.FC = () => {
         deliveryTime: "3-5 days",
 
         returnPolicy: "30 days return policy",
-
       },
 
       reviews: [
-
         { user: "User 7", review: "Excellent build quality.", rating: 5 },
 
         { user: "User 8", review: "Could be better.", rating: 3 },
-
       ],
-
     },
 
     {
-
       id: 5,
 
-      image: "https://rukminim1.flixcart.com/fk-p-flap/1600/270/image/5d51dbf60f2f8d4d.jpg?q=20",
+      image:
+        "https://rukminim1.flixcart.com/fk-p-flap/1600/270/image/5d51dbf60f2f8d4d.jpg?q=20",
 
       title: "Product 5",
 
@@ -235,10 +225,10 @@ const CardDetails: React.FC = () => {
 
       rating: 4.0,
 
-      description: "Product 5 offers excellent value for money, with top-notch quality and design.",
+      description:
+        "Product 5 offers excellent value for money, with top-notch quality and design.",
 
       specs: {
-
         weight: "1.7 kg",
 
         dimensions: "16 x 14 x 8 cm",
@@ -250,24 +240,24 @@ const CardDetails: React.FC = () => {
         deliveryTime: "4-6 days",
 
         returnPolicy: "15 days return policy",
-
       },
 
       reviews: [
-
         { user: "User 9", review: "Value for money!", rating: 4 },
 
-        { user: "User 10", review: "Good, but could use some improvement.", rating: 3 },
-
+        {
+          user: "User 10",
+          review: "Good, but could use some improvement.",
+          rating: 3,
+        },
       ],
-
     },
 
     {
-
       id: 6,
 
-      image: "https://rukminim1.flixcart.com/fk-p-flap/1600/270/image/2e6d5e4191298924.jpg?q=20",
+      image:
+        "https://rukminim1.flixcart.com/fk-p-flap/1600/270/image/2e6d5e4191298924.jpg?q=20",
 
       title: "Product 6",
 
@@ -279,10 +269,10 @@ const CardDetails: React.FC = () => {
 
       rating: 4.7,
 
-      description: "Product 6 offers the latest features in technology, ensuring top-tier performance.",
+      description:
+        "Product 6 offers the latest features in technology, ensuring top-tier performance.",
 
       specs: {
-
         weight: "1.9 kg",
 
         dimensions: "18 x 15 x 8 cm",
@@ -294,19 +284,14 @@ const CardDetails: React.FC = () => {
         deliveryTime: "3-7 days",
 
         returnPolicy: "30 days return policy",
-
       },
 
       reviews: [
-
         { user: "User 11", review: "Best in class!", rating: 5 },
 
         { user: "User 12", review: "Fantastic product.", rating: 5 },
-
       ],
-
     },
-
   ];
  
 
@@ -337,13 +322,13 @@ const CardDetails: React.FC = () => {
       const itemToAdd = { ...card, quantity: 1 }; // Create a new object with quantity
       dispatch(addItem(itemToAdd)); // Dispatch addItem action with updated card data
       toast.success(`${card.title} added to cart!`); // Notify user
-      // setTimeout(() => {
+      // setTimeout((zx) => {
       //   router.push('/cart'); // Navigate to the cart page after a short delay
       // }, 2000);
     } else {
       toast.error("User is not logged in.");
       setTimeout(() => {
-        router.push('/login'); // Redirect to login if not authenticated
+        router.push("/login"); // Redirect to login if not authenticated
       }, 2000);
     }
   };
@@ -351,6 +336,7 @@ const CardDetails: React.FC = () => {
   return (
     <div className={`${isDarkMode ? "bg-gray-900 text-white" : "bg-gray-100 text-black"} p-4 max-w-7xl mx-auto`}>
       <div className="flex flex-col md:flex-row items-center md:items-start">
+        
         {/* Left Side: Product Image */}
         <div className="w-full md:w-1/2 flex flex-col justify-center items-center mb-4 md:mb-0">
           <img
@@ -359,7 +345,7 @@ const CardDetails: React.FC = () => {
             className="w-full max-w-md h-80 object-cover rounded-lg shadow-lg"
           />
 
-          <div className="mt-4 w-full md:w-1/2 flex justify-center md:flex-row md:items-center">
+          <div className="mt-4 w-full md:w-1/2 flex gap-2 md:flex-row md:items-center">
             {/* Add to Cart Button with SVG Image */}
             <button
               onClick={handleAddToCart}
@@ -383,6 +369,11 @@ const CardDetails: React.FC = () => {
               </svg>
               <span>Add to Cart</span>
             </button>
+            <Link href='/cart'>
+            <button className=" w-full md:w-40 bg-black text-white py-2 px-4 rounded-lg shadow hover:bg-blue-600 transition mb-2 md:mb-0 flex items-center justify-center space-x-2">
+              <span>CheckOut Cart</span>
+            </button>
+            </Link>
           </div>
         </div>
 
@@ -395,8 +386,7 @@ const CardDetails: React.FC = () => {
           {/* Product Ratings */}
           <div className="flex items-center mt-2">
             <span className="text-yellow-500">
-              {"★".repeat(Math.floor(card.rating))}{" "}
-              {card.rating.toFixed(1)} / 5
+              {"★".repeat(Math.floor(card.rating))} {card.rating.toFixed(1)} / 5
             </span>
           </div>
 

@@ -1,6 +1,8 @@
 'use client'
 import React, { useState, ChangeEvent, FormEvent } from 'react';
 import { FaChevronDown, FaChevronUp } from "react-icons/fa6";  // Import down and up chevrons
+import { useAuth } from '../context/AuthContext';
+import { toast } from 'react-toastify';
 
 // Define the shape of the form data
 interface FormData {
@@ -27,9 +29,9 @@ interface Errors {
 }
 
 const DeliveryAddressCard: React.FC = () => {
-    const [isFormVisible, setIsFormVisible] = useState<boolean>(true);  // State for form visibility
+    const { setFormSubmissionStatus } = useAuth(); // Get the function to update form submission status
 
-    // Form field states
+    const [isFormVisible, setIsFormVisible] = useState<boolean>(true);  // State for form visibility
     const [formData, setFormData] = useState<FormData>({
         name: '',
         phone: '',
@@ -97,6 +99,8 @@ const DeliveryAddressCard: React.FC = () => {
 
         if (validateForm()) {
             console.log('Form submitted:', formData);
+            setFormSubmissionStatus(true);  // Update form submission status in context
+            toast.success(`Form is Submitted Succesfully now you can check payment options`)
         }
     };
 
@@ -242,6 +246,8 @@ const DeliveryAddressCard: React.FC = () => {
                             Submit
                         </button>
                     </form>
+
+                   
                 </div>
             )}
         </div>

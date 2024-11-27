@@ -37,7 +37,7 @@ const DeliverySummaryCard = () => {
                     2
                 </div>
                 {/* Heading Text */}
-                <span>ORDER SUMMARY</span>
+                <span className='mx-3'>ORDER SUMMARY</span>
 
                 {/* Button to toggle the cart visibility */}
                 <button 
